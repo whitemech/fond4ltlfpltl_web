@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+fond4ltlfpltl = {git = "https://github.com/whitemech/fond4ltlfpltl.git",ref = "packaging"}
+ply = "*"
+ltlf2dfa = {git = "https://github.com/whitemech/ltlf2dfa.git",ref = "refactoring"}
+
+[requires]
+python_version = "3.7"
