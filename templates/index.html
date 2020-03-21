@@ -53,7 +53,7 @@
                 <div class="form-group">
                   <select class="form-control" id="example_select">
                     <option></option>
-                    <option value="assets/examples/triangle-tire">triangle-tire</option>
+                    <option value="static/examples/triangle-tire.json">triangle-tire</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
@@ -263,8 +263,33 @@
           $("#form_pddl_domain_in").empty();
           $("#form_pddl_problem_in").empty();
           $('#input-tab').tab('show');
-          document.getElementById("tool_execute").innerHTML= 'Execute<i class="ml-2 fa fa-bolt"></i>'
+          document.getElementById("tool_execute").innerHTML= 'Execute <i class="ml-2 fa fa-bolt"></i>'
         });
+
+        $("#example_select").change(function(){
+          // var example_file = $(this).val();
+          $("#form_pddl_domain_in").empty();
+          $("#form_pddl_problem_in").empty();
+          $("#form_pddl_domain_out").empty();
+          $("#form_pddl_problem_out").empty();
+
+          $.ajax({
+          url: "/load-example",
+          type: "GET",
+          data: {jsdata: $("#example_select").val()},
+          success: function(response) {
+            $("#form_goal").val(response.formula);
+            $("#form_pddl_domain_in").html(response.domain);
+            $("#form_pddl_problem_in").html(response.problem);
+          // $('.nav-tabs a[href="#panelTLSF"]').tab('show');
+          },
+          error: function(xhr) {
+          //Do Something to handle error
+          }
+          });
+        });
+
+
       });
     </script>
 

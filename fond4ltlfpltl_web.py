@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from fond4ltlfpltl.core import execute
 import os
+import json
 
 PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -29,6 +30,14 @@ def compilation():
         return jsonify({'form_pddl_domain_out': str(domain_prime), 'form_pddl_problem_out': str(problem_prime)})
     except Exception as e:
         return jsonify({'error': str(e)})
+
+
+@app.route('/load-example', methods=['GET'])
+def load_example():
+    file_path = request.args.get('jsdata')
+
+    with open(file_path) as f:
+        return json.load(f)
 
 
 # @app.route('/download-domain', methods=['GET'])
