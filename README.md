@@ -12,11 +12,10 @@ pip install pipenv
 - Install MONA:
 
   - download from release page:
-```
-wget http://www.brics.dk/mona/download/mona-1.4-18.tar.gz
-tar -xf mona-1.4-18.tar.gz
-```
 
+        wget http://www.brics.dk/mona/download/mona-1.4-18.tar.gz
+        tar -xf mona-1.4-18.tar.gz
+      
   - Follows the `INSTALL` steps
   - Check the command `mona` works.
 
