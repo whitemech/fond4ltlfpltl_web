@@ -36,6 +36,6 @@ pipenv install
 To run the app:
 
 ```
-python fond4ltlfpltl.py
+python fond4ltlfpltl_web.py
 ```
 
