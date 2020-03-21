@@ -54,10 +54,10 @@
                   <select class="form-control" id="example_select">
                     <option></option>
                     <option value="static/examples/triangle-tire.json">triangle-tire</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+<!--                    <option>2</option>-->
+<!--                    <option>3</option>-->
+<!--                    <option>4</option>-->
+<!--                    <option>5</option>-->
                   </select>
                 </div>
               </div>
@@ -281,11 +281,11 @@
             $("#form_goal").val(response.formula);
             $("#form_pddl_domain_in").html(response.domain);
             $("#form_pddl_problem_in").html(response.problem);
-          // $('.nav-tabs a[href="#panelTLSF"]').tab('show');
+          // $('.nav-tabs a[href="#inputtab"]').tab('show');
           },
           error: function(xhr) {
-          //Do Something to handle error
-          }
+              alert(xhr.error)
+            }
           });
         });
 

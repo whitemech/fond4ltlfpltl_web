@@ -36,8 +36,11 @@ def compilation():
 def load_example():
     file_path = request.args.get('jsdata')
 
-    with open(file_path) as f:
-        return json.load(f)
+    try:
+        with open(os.path.join(PACKAGE_DIR, file_path)) as f:
+            return json.load(f)
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 
 # @app.route('/download-domain', methods=['GET'])
