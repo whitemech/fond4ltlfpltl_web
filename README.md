@@ -30,7 +30,7 @@ pipenv shell
 
 Install all the locked dependencies:
 ```
-pipenv instal
+pipenv install
 ```
 
 To run the app:
