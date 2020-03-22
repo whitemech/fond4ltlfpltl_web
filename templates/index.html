@@ -134,8 +134,8 @@
                       <div class="col-sm ">
                         <div class="card">
                           <h5 class="card-header">LTL<sub>f</sub> or PLTL<sub>f</sub> formula
-                          <button type="button" class="btn" id="formula-popover" data-html='true' data-toggle="popover"><i class="fa fa-question-circle"></i></button>
-                        </h5>
+                            <button type="button" class="btn" id="formula-popover" data-html='true' data-toggle="popover"><i class="fa fa-question-circle"></i></button>
+                          </h5>
                           <div class="card-body">
                             <input class="form-control" id="form_goal" name="form_goal" type="text" placeholder="Formula" required>
                           </div>
@@ -159,7 +159,9 @@
 
                       <div class="col-sm">
                         <div class="card">
-                          <h5 class="card-header">PDDL Problem</h5>
+                          <h5 class="card-header">PDDL Problem
+                            <button type="button" class="btn" id="problem-popover" data-html='true' data-toggle="popover"><i class="fa fa-question-circle"></i></button>
+                          </h5>
                           <div class="card-body">
                             <div class="form-group">
                               <textarea class="form-control" placeholder="PDDL Problem"
@@ -223,7 +225,6 @@
     <script type="text/javascript">
       $(document).ready(function() {
         // Bootstrap popovers
-        // $('[data-toggle="popover"]').popover();
         $('#formula-popover').popover({
           // trigger: " click",
           html: true,
@@ -234,6 +235,13 @@
                   "<b> predicateName_obj1_obj2_..._objN</b>" +
                   "<br> E.g. " +
                   "<ul><li>vehicleat(l23) becomes vehicleat_l23</li><li>on(a1, a2) becomes on_a1_a2</li></ul>"
+        });
+        $('#problem-popover').popover({
+          // trigger: " click",
+          html: true,
+          sanitize: false,
+          title: "Note",
+          content: "The <b>:goal</b> in the PDDL problem is completely ignored in the compilation process."
         });
 
 
