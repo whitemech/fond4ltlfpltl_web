@@ -170,7 +170,7 @@
                       <div class="col-sm">
                         <div class="card">
                           <h5 class="card-header">
-                            <a href="/download/new-domain.pddl" id="domain_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Domain</a>
+                            <a href="/download/new-domain.pddl" id="domain_download" class="btn btn-primary btn disabled" tabindex="-1" role="button"><i class="fa fa-download"></i> New PDDL Domain</a>
                           </h5>
                           <div class="card-body">
                             <div class="form-group">
@@ -184,7 +184,7 @@
                       <div class="col-sm">
                         <div class="card">
                           <h5 class="card-header">
-                            <a href="/download/new-problem.pddl" id="problem_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Problem</a>
+                            <a href="/download/new-problem.pddl" id="problem_download" class="btn btn-primary btn disabled" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Problem</a>
                           </h5>
                           <div class="card-body">
                             <div class="form-group">
@@ -232,8 +232,8 @@
         $("#tool_execute").click( function() {
           if ($("#form_goal").val() != '' && $('#form_pddl_domain_in').val() != '' && $('#form_pddl_problem_in').val() != ''){
             $("#tool_execute").attr("disabled", true);
-            $("#domain_download").attr("disabled", true);
-            $("#problem_download").attr("disabled", true);
+            $("#domain_download").addClass("disabled");
+            $("#problem_download").addClass("disabled");
             document.getElementById("tool_execute").innerHTML= 'Loading <i class="ml-2 fa fa-spinner fa-spin"></i>'
 
             $("#form_pddl_domain_out").empty();
@@ -250,8 +250,8 @@
               success: function(response) {
                 $("#form_pddl_domain_out").html(response.form_pddl_domain_out);
                 $("#form_pddl_problem_out").html(response.form_pddl_problem_out);
-                $("#domain_download").attr("disabled", false);
-                $("#problem_download").attr("disabled", false);
+                $("#domain_download").removeClass("disabled");
+                $("#problem_download").removeClass("disabled");
                 $('#output-tab').tab('show');
                 document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'
                 $("#tool_execute").attr("disabled", false);
@@ -266,6 +266,8 @@
 
         // Change Output to Input when Select List change
         $("#example_select").change(function(){
+          $("#domain_download").addClass("disabled");
+          $("#problem_download").addClass("disabled");
           document.getElementById("tool_execute").innerHTML= 'Execute <i class="ml-2 fa fa-bolt"></i>'
           $("#form_pddl_domain_in").empty();
           $("#form_pddl_problem_in").empty();
