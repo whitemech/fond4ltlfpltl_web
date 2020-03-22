@@ -19,7 +19,7 @@
 
     </head>
 
-    <body lang="en" background="static/images/subtlenet2.png">
+    <body lang="en" background="{{ url_for('static', filename='images/subtlenet2.png') }}">
 
       <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light shadow border">
           <!-- <img class="navbar-brand" src="static/images/wordcloud.png" alt="logo"> -->
@@ -115,7 +115,7 @@
                       <div class="col-sm ">
                         <div class="card">
                           <h5 class="card-header">LTL<sub>f</sub> or PLTL<sub>f</sub> formula
-                          <button type="button" class=" btn" data-toggle="popover" title="How to write formulas?" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fa fa-question-circle"></i></button>
+                          <button type="button" class="btn" id="formula-popover" data-html='true' data-toggle="popover"><i class="fa fa-question-circle"></i></button>
                         </h5>
                           <div class="card-body">
                             <input class="form-control" id="form_goal" name="form_goal" type="text" placeholder="Formula" required>
@@ -159,7 +159,7 @@
                       <div class="col-sm">
                         <div class="card">
                           <h5 class="card-header">
-                            <button id="domain_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Domain</button>
+                            <a href="/download/new-domain.pddl" id="domain_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Domain</a>
                           </h5>
                           <div class="card-body">
                             <div class="form-group">
@@ -173,7 +173,7 @@
                       <div class="col-sm">
                         <div class="card">
                           <h5 class="card-header">
-                            <button id="problem_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Problem</button>
+                            <a href="/download/new-problem.pddl" id="problem_download" class="btn btn-primary btn" tabindex="-1" role="button" disabled><i class="fa fa-download"></i> New PDDL Problem</a>
                           </h5>
                           <div class="card-body">
                             <div class="form-group">
@@ -200,76 +200,65 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!--    <script src="static/js/saveFile.js"></script>-->
 
     <script type="text/javascript">
       $(document).ready(function() {
         // Bootstrap popovers
-        $('[data-toggle="popover"]').popover();
+        // $('[data-toggle="popover"]').popover();
+        $('#formula-popover').popover({
+          // trigger: " click",
+          html: true,
+          sanitize: false,
+          title: "How to write formulas?",
+          content: "Look at the LTL<sub>f</sub>2DFA tool <b>syntax</b>/<b>semantics</b> <a href='http://ltlf2dfa.diag.uniroma1.it/#syntax' target='_blank'>here</a>. <br>" +
+                  "Symbols correspond to grounded predicates in PDDL and objects are separated by an \"_\". <br>" +
+                  "<b> predicateName_obj1_obj2_..._objN</b>" +
+                  "<br> E.g. " +
+                  "<ul><li>vehicleat(l23) becomes vehicleat_l23</li><li>on(a1, a2) becomes on_a1_a2</li></ul>"
+        });
 
 
         $("#tool_execute").click( function() {
-          // alert('button clicked');
-          $("#tool_execute").attr("disabled", true);
-          $("#domain_download").attr("disabled", true);
-          $("#problem_download").attr("disabled", true);
-          document.getElementById("tool_execute").innerHTML= 'Loading <i class="ml-2 fa fa-spinner fa-spin"></i>'
+          if ($("#form_goal").val() != '' && $('#form_pddl_domain_in').val() != '' && $('#form_pddl_problem_in').val() != ''){
+            $("#tool_execute").attr("disabled", true);
+            $("#domain_download").attr("disabled", true);
+            $("#problem_download").attr("disabled", true);
+            document.getElementById("tool_execute").innerHTML= 'Loading <i class="ml-2 fa fa-spinner fa-spin"></i>'
 
-          $("#form_pddl_domain_out").empty();
-          $("#form_pddl_problem_out").empty();
-          // $('#output-tab').tab('show');
-          $.ajax({
-            url: "/compilation",
-            type: "POST",
-            data: {
-              form_goal: $('#form_goal').val(),
-              form_pddl_domain_in: $('#form_pddl_domain_in').val(),
-              form_pddl_problem_in: $('#form_pddl_problem_in').val()
-            },
-            success: function(response) {
-              $("#form_pddl_domain_out").html(response.form_pddl_domain_out);
-              $("#form_pddl_problem_out").html(response.form_pddl_problem_out);
-              // TODO create files to download....
-              // $("#domain_download").attr("disabled", false);
-              // $("#problem_download").attr("disabled", false);
-              $('#output-tab').tab('show');
-              document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'
-              $("#tool_execute").attr("disabled", false);
-            },
-            error: function(xhr) {
-              alert(xhr.error)
-            }
-          });
+            $("#form_pddl_domain_out").empty();
+            $("#form_pddl_problem_out").empty();
+            // $('#output-tab').tab('show');
+            $.ajax({
+              url: "/compilation",
+              type: "POST",
+              data: {
+                form_goal: $('#form_goal').val(),
+                form_pddl_domain_in: $('#form_pddl_domain_in').val(),
+                form_pddl_problem_in: $('#form_pddl_problem_in').val()
+              },
+              success: function(response) {
+                $("#form_pddl_domain_out").html(response.form_pddl_domain_out);
+                $("#form_pddl_problem_out").html(response.form_pddl_problem_out);
+                $("#domain_download").attr("disabled", false);
+                $("#problem_download").attr("disabled", false);
+                $('#output-tab').tab('show');
+                document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'
+                $("#tool_execute").attr("disabled", false);
+              },
+              error: function(xhr) {
+                alert(xhr.error)
+              }
+            });
+          }
+
         });
 
-        // $("#domain_download").click(function (e) {
-        //   e.preventDefault();
-        //   $("#domain_download").attr("disabled", true);
-        //   $.ajax({
-        //     url: "/download-domain",
-        //     type: "GET",
-        //     success: function() {
-        //       $("#problem_download").attr("disabled", false);
-        //       saveTextAsFile();
-        //     },
-        //     error: function(xhr) {
-        //       // Handle error here
-        //     }
-        //   });
-        // });
-
         // Change Output to Input when Select List change
-        $("#example_select").change(function (){
+        $("#example_select").change(function(){
+          document.getElementById("tool_execute").innerHTML= 'Execute <i class="ml-2 fa fa-bolt"></i>'
           $("#form_pddl_domain_in").empty();
           $("#form_pddl_problem_in").empty();
           $('#input-tab').tab('show');
-          document.getElementById("tool_execute").innerHTML= 'Execute <i class="ml-2 fa fa-bolt"></i>'
-        });
-
-        $("#example_select").change(function(){
-          // var example_file = $(this).val();
-          $("#form_pddl_domain_in").empty();
-          $("#form_pddl_problem_in").empty();
           $("#form_pddl_domain_out").empty();
           $("#form_pddl_problem_out").empty();
 

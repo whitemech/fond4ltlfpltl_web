@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, url_for, Response
 from fond4ltlfpltl.core import execute
 import os
 import json
@@ -22,10 +22,10 @@ def compilation():
     try:
         domain_prime, problem_prime = execute(in_domain, in_problem, formula)
 
-        # with open(os.path.join(PACKAGE_DIR, "assets", "output", "new-domain.pddl"), "w+") as d:
-        #     d.write(str(domain_prime))
-        # with open(os.path.join(PACKAGE_DIR, "assets", "output", "new-problem.pddl"), "w+") as p:
-        #     p.write(str(problem_prime))
+        with open(os.path.join(PACKAGE_DIR, "static", "output", "new-domain.pddl"), "w+") as d:
+            d.write(str(domain_prime))
+        with open(os.path.join(PACKAGE_DIR, "static", "output", "new-problem.pddl"), "w+") as p:
+            p.write(str(problem_prime))
 
         return jsonify({'form_pddl_domain_out': str(domain_prime), 'form_pddl_problem_out': str(problem_prime)})
     except Exception as e:
@@ -43,14 +43,12 @@ def load_example():
         return jsonify({'error': str(e)})
 
 
-# @app.route('/download-domain', methods=['GET'])
-# def download_domain():
-#     return send_from_directory("assets/output", "new-domain.pddl")
-#
-#
-# @app.route('/download-problem', methods=['GET'])
-# def download_problem():
-#     return send_from_directory("assets/output", "new-problem.pddl")
+@app.route('/download/<string:file>')
+def download(file):
+    return Response(
+        open(os.path.join(PACKAGE_DIR, 'static', 'output', file)),
+        mimetype="text/plain",
+        headers={"Content-disposition": "attachment; filename={}".format(file)})
 
 
 if __name__ == "__main__":
