@@ -16,6 +16,8 @@
 # Generated files
 .idea/**/contentModel.xml
 static/output/*
+# exception to the rule
+!static/output/.gitkeep
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
