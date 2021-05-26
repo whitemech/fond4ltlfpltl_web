@@ -1,4 +1,99 @@
-<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light shadow border">
-    <!-- <img class="navbar-brand" src="static/images/wordcloud.png" alt="logo"> -->
-    <span class="ml-3 navbar-brand" href="#"> <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> </span>
+<!--<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light shadow border">-->
+<!--    &lt;!&ndash; <img class="navbar-brand" src="static/images/wordcloud.png" alt="logo"> &ndash;&gt;-->
+<!--    <span class="ml-3 navbar-brand" href="#"> <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> </span>-->
+<!--</nav>-->
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link active" aria-current="page" href="/usage">Usage</a>-->
+                <!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#usageModal" data-bs-toggle="modal" data-bs-target="#usageModal">Usage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#apiModal" data-bs-toggle="modal" data-bs-target="#apiModal">API</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#aboutModal" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
+                </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"-->
+                <!--                       data-bs-toggle="dropdown" aria-expanded="false">-->
+                <!--                        Dropdown link-->
+                <!--                    </a>-->
+                <!--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
+                <!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
+                <!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
+                <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
+            </ul>
+        </div>
+    </div>
 </nav>
+
+<!-- Usage Modal -->
+<div class="modal fade" id="usageModal" tabindex="-1" aria-labelledby="usageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="usageModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         Usage
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- API Modal -->
+<div class="modal fade" id="apiModal" tabindex="-1" aria-labelledby="apiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="apiModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         APIs
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- About Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            About
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>

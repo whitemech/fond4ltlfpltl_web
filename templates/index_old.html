@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+
+{% include 'head.html' %}
+
+<body lang="en">
+
+{% include 'navbar.html' %}
+
+<div class="mt-4 m-2 row">
+    <div class="col-sm-3">
+        <div class="alert alert-danger shadow" role="alert">
+            <h4 class="alert-heading">Attention! Work in Progress.</h4>
+            <p>The FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub> tool is still under development. So, it may
+                not run as expected. In particular, the tool does not recognize all kinds of PDDL domains yet.</p>
+            <hr>
+            <p class="mb-0">Check it out on <a target="_blank" href="https://github.com/whitemech/fond4ltlfpltl.git">GitHub</a>
+                to stay tuned on updates. </p>
+        </div>
+        <div class="card shadow">
+            <h5 class="card-header">
+                What is FOND 4 LTL<sub>f</sub> - PLTL<sub>f</sub> ?
+            </h5>
+            <div class="card-body">
+                <p class="card-text">Fully Observable Non-Deterministic (FOND)
+                    planning for LTL<sub>f</sub> - PLTL<sub>f</sub>
+                    is a tool that compiles FOND
+                    planning problems with temporally extended goals, specified either
+                    in LTL<sub>f</sub> or in PLTL<sub>f</sub>, into classical FOND
+                    planning problems.
+                </p>
+                <p>
+                    A detailed description of what is the theory behind this tool is available
+                    <a href="https://arxiv.org/pdf/2004.07027.pdf">here.</a>
+                </p>
+            </div>
+        </div>
+        <div class="mt-3 card shadow">
+            <div class="card-body">
+                <button name="tool_execute" type="button" form="my_form" id="tool_execute"
+                        class="btn btn-primary btn btn-block" role="button">Execute <i class="ml-2 fa fa-bolt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mt-3 card shadow">
+            <h5 class="card-header">Examples</h5>
+            <div class="card-body">
+                <div class="form-group">
+                    <select class="form-control" id="example_select">
+                        <option></option>
+                        <option value="static/examples/triangle-tire.json">triangle-tire</option>
+                        <option value="static/examples/acrobatics.json">acrobatics</option>
+                        <option value="static/examples/beam-walk.json">beam-walk</option>
+                        <!--                    <option>4</option>-->
+                        <!--                    <option>5</option>-->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 card shadow">
+            <h5 class="card-header">
+                FOND Planners
+            </h5>
+            <div class="card-body">
+                <ul>
+                    <li><a href="https://github.com/tomsons22/FOND-SAT" target="_blank">FOND-SAT Planner</a></li>
+                    <li><a href="https://bitbucket.org/haz/planner-for-relevant-policies/wiki/Home" target="_blank">PRP
+                        Planner</a></li>
+                    <li>
+                        <a href="https://bitbucket.org/robertmattmueller/mynd/src/e71eb25a3f8fc207efbbc158653dd19c3d3d0f22/README.rst"
+                           target="_blank">MyND Planner</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--          <div class="mb-3 card shadow">-->
+        <!--            <h5 class="card-header">-->
+        <!--              Useful Links-->
+        <!--            </h5>-->
+        <!--            <div class="card-body">-->
+        <!--              <p class="card-text">Fully Observable Non-Deterministic (FOND)-->
+        <!--                planning for LTL<sub>f</sub> - PLTL<sub>f</sub>-->
+        <!--                 is a tool that compiles FOND-->
+        <!--                planning problems with temporally extended goals, specified either-->
+        <!--                 in LTL<sub>f</sub> or in PLTL<sub>f</sub>, into classical FOND-->
+        <!--                 planning problems.-->
+        <!--               </p>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <div class="mt-3 ml-1 text-muted"> © 2020,
+            <a target="_blank" href="https://whitemech.github.io">WhiteMech</a>
+            @
+            <a target="_blank" href="https://www.uniroma1.it/en/pagina-strutturale/home">Sapienza University</a>
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="card shadow">
+            <h5 class="card-header">Tool</h5>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="input-tab" data-toggle="tab" href="#inputtab" role="tab"
+                           aria-controls="input-tab" aria-selected="true">Input</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="output-tab" data-toggle="tab" href="#outputtab" role="tab"
+                           aria-controls="output-tab" aria-selected="false">Output</a>
+                    </li>
+                </ul>
+                <form id="my_form" method="post">
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Input -->
+                        <div class="tab-pane fade show active" id="inputtab" role="tabpanel"
+                             aria-labelledby="input-tab">
+                            <div class="row mt-3 ">
+                                <div class="col-sm ">
+                                    <div class="card">
+                                        <h5 class="card-header">LTL<sub>f</sub> or PLTL<sub>f</sub> formula
+                                            <button type="button" class="btn" id="formula-popover" data-html='true'
+                                                    data-toggle="popover"><i class="fas fa-question"></i></button>
+                                        </h5>
+                                        <div class="card-body">
+                                            <input class="form-control" id="form_goal" name="form_goal" type="text"
+                                                   placeholder="Formula" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-sm">
+
+                                    <div class="card">
+                                        <h5 class="card-header">PDDL Domain</h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                              <textarea class="form-control" placeholder="PDDL Domain"
+                                        id="form_pddl_domain_in" name="form_pddl_domain_in" rows="20"
+                                        required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm">
+                                    <div class="card">
+                                        <h5 class="card-header">PDDL Problem
+                                            <button type="button" class="btn" id="problem-popover" data-html='true'
+                                                    data-toggle="popover"><i class="fas fa-question"></i></button>
+                                        </h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                              <textarea class="form-control" placeholder="PDDL Problem"
+                                        id="form_pddl_problem_in" name="form_pddl_problem_in" rows="20"
+                                        required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Output -->
+                        <div class="tab-pane fade" id="outputtab" role="tabpanel" aria-labelledby="output-tab">
+                            <div class="row mt-3">
+                                <div class="col-sm">
+                                    <div class="card">
+                                        <h5 class="card-header">
+                                            <a href="/download/new-domain.pddl" id="domain_download"
+                                               class="btn btn-primary btn disabled" tabindex="-1" role="button"><i
+                                                    class="fa fa-download"></i> New PDDL Domain</a>
+                                        </h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                              <textarea class="form-control" placeholder="New PDDL Domain"
+                                        id="form_pddl_domain_out" name="form_pddl_domain_out" rows="20"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm">
+                                    <div class="card">
+                                        <h5 class="card-header">
+                                            <a href="/download/new-problem.pddl" id="problem_download"
+                                               class="btn btn-primary btn disabled" tabindex="-1" role="button"
+                                               disabled><i class="fa fa-download"></i> New PDDL Problem</a>
+                                        </h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                              <textarea class="form-control" placeholder="New PDDL Problem"
+                                        id="form_pddl_problem_out" name="form_pddl_problem_out" rows="20"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<!-- Optional JavaScript here for fast loading. Order is IMPORTANT -->
+<!-- jQuery first, then Ajax, then Popper.js/Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Bootstrap popovers
+        $('#formula-popover').popover({
+            // trigger: " click",
+            html: true,
+            sanitize: false,
+            title: "How to write formulas?",
+            content: "Look at the LTL<sub>f</sub>2DFA tool <b>syntax</b>/<b>semantics</b> <a href='http://ltlf2dfa.diag.uniroma1.it/#syntax' target='_blank'>here</a>. <br>" +
+                "Symbols correspond to grounded predicates in PDDL and objects are separated by an \"_\". <br>" +
+                "<b> predicateName_obj1_obj2_..._objN</b>" +
+                "<br> E.g. " +
+                "<ul><li>vehicleat(l23) becomes vehicleat_l23</li><li>on(a1, a2) becomes on_a1_a2</li></ul>"
+        });
+        $('#problem-popover').popover({
+            // trigger: " click",
+            html: true,
+            sanitize: false,
+            title: "Note",
+            content: "The <b>:goal</b> in the PDDL problem is completely ignored in the compilation process."
+        });
+
+
+        $("#tool_execute").click(function () {
+            if ($("#form_goal").val() != '' && $('#form_pddl_domain_in').val() != '' && $('#form_pddl_problem_in').val() != '') {
+                $("#tool_execute").attr("disabled", true);
+                $("#domain_download").addClass("disabled");
+                $("#problem_download").addClass("disabled");
+                document.getElementById("tool_execute").innerHTML = 'Loading <i class="ml-2 fa fa-spinner fa-spin"></i>'
+
+                $("#form_pddl_domain_out").empty();
+                $("#form_pddl_problem_out").empty();
+                // $('#output-tab').tab('show');
+                $.ajax({
+                    url: "/compilation",
+                    type: "POST",
+                    data: {
+                        form_goal: $('#form_goal').val(),
+                        form_pddl_domain_in: $('#form_pddl_domain_in').val(),
+                        form_pddl_problem_in: $('#form_pddl_problem_in').val()
+                    },
+                    success: function (response) {
+                        $("#form_pddl_domain_out").html(response.form_pddl_domain_out);
+                        $("#form_pddl_problem_out").html(response.form_pddl_problem_out);
+                        $("#domain_download").removeClass("disabled");
+                        $("#problem_download").removeClass("disabled");
+                        $('#output-tab').tab('show');
+                        document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'
+                        $("#tool_execute").attr("disabled", false);
+                    },
+                    error: function (xhr) {
+                        alert(xhr.error)
+                    }
+                });
+            }
+
+        });
+
+        // Change Output to Input when Select List change
+        $("#example_select").change(function () {
+            $("#domain_download").addClass("disabled");
+            $("#problem_download").addClass("disabled");
+            document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'
+            $("#form_pddl_domain_in").empty();
+            $("#form_pddl_problem_in").empty();
+            $('#input-tab').tab('show');
+            $("#form_pddl_domain_out").empty();
+            $("#form_pddl_problem_out").empty();
+
+            $.ajax({
+                url: "/load-example",
+                type: "GET",
+                data: {jsdata: $("#example_select").val()},
+                success: function (response) {
+                    $("#form_goal").val(response.formula);
+                    $("#form_pddl_domain_in").html(response.domain);
+                    $("#form_pddl_problem_in").html(response.problem);
+                    // $('.nav-tabs a[href="#inputtab"]').tab('show');
+                },
+                error: function (xhr) {
+                    alert(xhr.error)
+                }
+            });
+        });
+
+
+    });
+</script>
+
+</html>
