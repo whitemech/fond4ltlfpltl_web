@@ -1,41 +1,11 @@
 <!doctype html>
 <html lang="en">
-    <head>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137788077-4"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'UA-137788077-4');
-      </script>
+    {% include 'head.html' %}
 
+    <body lang="en">
 
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="description" content="FOND4LTLfPLTL, a tool for compiling
-        FOND planning with temporally extended goals into classical FOND
-        planning">
-      <meta name="keywords" content="LTLf2DFA, LTLf, PLTLf, DFA, deterministic finite state automata, planning, fond, automaton, sapienza">
-      <meta name="author" content="Francesco Fuggitti">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-
-      <!-- Bootstrap CSS and Font Awesome -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-      <!-- Title -->
-      <title>FOND 4 LTLf PLTLf</title>
-
-    </head>
-
-    <body lang="en" background="{{ url_for('static', filename='images/subtlenet2.png') }}">
-
-      <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light shadow border">
-          <!-- <img class="navbar-brand" src="static/images/wordcloud.png" alt="logo"> -->
-          <span class="ml-3 navbar-brand" href="#"> <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> </span>
-      </nav>
+      {% include 'navbar.html' %}
 
       <div class="mt-4 m-2 row">
         <div class="col-sm-3">
