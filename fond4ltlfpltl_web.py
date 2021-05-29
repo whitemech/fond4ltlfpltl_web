@@ -123,10 +123,12 @@ def plan():
 
     try:
         domain_prime, problem_prime, p_formula, mona_output = _compilation(in_domain, in_problem, formula)
+        dom_path = OUTPUT_DIR / "new-domain.pddl"
+        prob_path = OUTPUT_DIR / "new-problem.pddl"
 
         # call to planner and handle output
         if planner == "mynd":
-            cmd = f"python {MYND_DIR}/mynd_wrapper.py -d {domain_prime} -p {problem_prime} -s {policy_type}"
+            cmd = f"python {MYND_DIR}/mynd_wrapper.py -d {dom_path} -p {prob_path} -s {policy_type}"
             err = launch(cmd)
             if err:
                 return jsonify({'form_pddl_domain_out': str(domain_prime),
@@ -135,7 +137,7 @@ def plan():
                                 'dfa': str(mona_output),
                                 'error': str(err)})
         elif planner == "prp":
-            cmd = f"python {PRP_DIR}/prp_wrapper.py -d {domain_prime} -p {problem_prime}"
+            cmd = f"python {PRP_DIR}/prp_wrapper.py -d {dom_path} -p {prob_path}"
             err = launch(cmd)
             if err:
                 return jsonify({'form_pddl_domain_out': str(domain_prime),
@@ -148,7 +150,7 @@ def plan():
                 p.rename(p.with_suffix(".txt"))
         else:
             assert planner == "fondsat"
-            cmd = f"python {FONDSAT_DIR}/fondsat_wrapper.py -d {domain_prime} -p {problem_prime} -s {policy_type}"
+            cmd = f"python {FONDSAT_DIR}/fondsat_wrapper.py -d {dom_path} -p {prob_path} -s {policy_type}"
             err = launch(cmd)
             if err:
                 return jsonify({'form_pddl_domain_out': str(domain_prime),

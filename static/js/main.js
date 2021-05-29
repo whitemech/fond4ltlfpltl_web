@@ -177,7 +177,6 @@ $(document).ready(function () {
                     policy_type = 1;
                 }
                 const chosen_planner = $("#planner_select").val();
-                console.log(chosen_planner);
                 if (chosen_planner === "prp" && policy_type === 1) {
                     alert("PRP does not support strong policies.")
                 } else {
@@ -218,13 +217,13 @@ $(document).ready(function () {
                             if (response.error) {
                                 $("#policy_text").html(response.error);
                                 $("#policy_graph").html("No policy found. See text for more details.");
-                                alert(chosen_planner + "didn't find the policy. Try with another planner from the list.")
+                                alert(chosen_planner + " didn't find the policy. Try with another planner from the list.")
                             } else {
                                 $("#policy_text").html(response.policy_txt);
                                 d3.select("#policy_graph").graphviz({
                                     width: window.innerWidth - 300,
                                     height: window.innerHeight - 300,
-                                    fit: false
+                                    fit: true
                                 }).transition(function () {
                                     return d3.transition("main")
                                         .ease(d3.easeLinear)
