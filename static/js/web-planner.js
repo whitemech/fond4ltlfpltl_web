@@ -27647,7 +27647,7 @@
                 }],
                 "#connected-predicate": [{
                     token: ["meta.type.pddl", "string.unquoted.pddl", "meta.type.pddl"],
-                    regex: /(\()(and|or|eq|neq|not|\>\=|\<\=|\<|\>|assign|increase|decrease|scale-up|scale-down|forall|exists|imply|when|\+|-|\*|\/)(\s*)/,
+                    regex: /(\()(and|or|oneof|eq|neq|not|\>\=|\<\=|\<|\>|assign|increase|decrease|scale-up|scale-down|forall|exists|imply|when|\+|-|\*|\/)(\s*)/,
                     push: [{
                         token: "meta.type.pddl",
                         regex: /\)/,
@@ -27677,7 +27677,7 @@
                 }],
                 "#connected-predicate-other": [{
                     token: ["text", "string.unquoted.pddl", "text"],
-                    regex: /(\()(and|or|eq|neq|not|\>\=|\<\=|\<|\>|assign|increase|decrease|scale-up|scale-down|forall|exists|imply|when|\+|-|\*|\/)(\s*)/,
+                    regex: /(\()(and|or|oneof|eq|neq|not|\>\=|\<\=|\<|\>|assign|increase|decrease|scale-up|scale-down|forall|exists|imply|when|\+|-|\*|\/)(\s*)/,
                     push: [{
                         token: "text",
                         regex: /\)/,
@@ -28328,7 +28328,7 @@
                 }, {
                     caseInsensitive: !0,
                     token: "keyword.operator",
-                    regex: "\\b(?:eq|neq|when|and|or)\\b"
+                    regex: "\\b(?:eq|neq|when|and|oneof|or)\\b"
                 }, {
                     caseInsensitive: !0,
                     token: "keyword.operator",

@@ -12,9 +12,9 @@
     <div class="row mt-2 mb-2 ">
         <div class="col-6">
             <div class="row">
-                <div class="col-6">
-                    <select class="form-select form-select-md" aria-label=".form-select-md example">
-                        <option selected>Select PDDL Domain example</option>
+                <div class="col-sm-6">
+                    <select class="form-select form-select-md" aria-label=".form-select-md example" id="example_select">
+                        <option selected>Select example</option>
                         <option value="static/examples/triangle-tire.json">triangle-tire</option>
                         <option value="static/examples/acrobatics.json">acrobatics</option>
                         <option value="static/examples/beam-walk.json">beam-walk</option>
@@ -22,12 +22,12 @@
                         <!--                    <option>5</option>-->
                     </select>
                 </div>
-                <div class="col-6">
-                    <select class="form-select form-select-md" aria-label=".form-select-md example">
-                        <option selected>Select PDDL Problem example</option>
-                        <option value="static/examples/triangle-tire.json">triangle-tire</option>
-                        <option value="static/examples/acrobatics.json">acrobatics</option>
-                        <option value="static/examples/beam-walk.json">beam-walk</option>
+                <div class="col-sm-6">
+                    <select class="form-select form-select-md" aria-label=".form-select-md example" id="planner_select">
+                        <!--                        <option selected>Select FOND Planner</option>-->
+                        <option value="mynd" selected>MyND Planner</option>
+                        <option value="prp">PRP Planner</option>
+                        <option value="fondsat">FOND-SAT Planner</option>
                         <!--                    <option>4</option>-->
                         <!--                    <option>5</option>-->
                     </select>
@@ -36,29 +36,33 @@
         </div>
         <div class="col-6">
             <div class="row">
-                <div class="col">
-                    <!--                    3-->
-                    <button name="tool_compile" type="button" form="my_form" id="tool_compile"
-                            class="btn btn-primary" role="button">Compilation only
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-gear-fill" viewBox="0 0 16 16">
-                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                        </svg>
-                        </i>
-                    </button>
-                    <button name="tool_execute" type="button" form="my_form" id="tool_execute"
-                            class="btn btn-primary" role="button">Compilation and Policy
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-gear-fill" viewBox="0 0 16 16">
-                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                        </svg>
-                        +
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
-                            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                        </svg>
-                    </button>
-                    <!--                    3-->
+
+                <div class="col-sm-6">
+                    <div class="d-grid">
+                        <button name="tool_compile" type="button" form="my_form" id="tool_compile"
+                                class="btn btn-primary" role="button">Compilation only
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-gear-fill" viewBox="0 0 16 16">
+                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d-grid">
+                        <button name="tool_execute" type="button" form="my_form" id="tool_execute"
+                                class="btn btn-primary" role="button">Compilation and Policy
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-gear-fill" viewBox="0 0 16 16">
+                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                            </svg>
+                            +
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
+                                <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,128 +71,7 @@
 </div>
 <div class="container-fluid">
 
-<!--    <ul class="nav nav-tabs" id="myTab" role="tablist">-->
-<!--        <li class="nav-item" role="presentation">-->
-<!--            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"-->
-<!--                    role="tab" aria-controls="home" aria-selected="true">Home-->
-<!--            </button>-->
-<!--        </li>-->
-<!--        <li class="nav-item" role="presentation">-->
-<!--            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"-->
-<!--                    role="tab" aria-controls="profile" aria-selected="false">Profile-->
-<!--            </button>-->
-<!--        </li>-->
-<!--        <li class="nav-item" role="presentation">-->
-<!--            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"-->
-<!--                    role="tab" aria-controls="contact" aria-selected="false">Contact-->
-<!--            </button>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--    <div class="tab-content" id="myTabContent">-->
-<!--        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>-->
-<!--        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>-->
-<!--        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>-->
-<!--    </div>-->
-
-
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="input-tab" data-bs-toggle="tab" data-bs-target="#inputtab" type="button"
-               role="tab" aria-controls="profile" aria-selected="true" href="#inputtab">Input
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#outputtab" type="button"
-                    role="tab" aria-controls="outputtab" aria-selected="false">Output
-            </a>
-        </li>
-    </ul>
-
-
-    <div class="tab-content" id="myTabContent">
-
-        <!-- Input -->
-        <div class="tab-pane fade show active" id="inputtab" role="tabpanel"
-             aria-labelledby="input-tab">
-
-            <div class="row mt-4 mb-2">
-                <label for="staticEmail" class="col-sm-2 col-form-label"><h4>LTL<sub>f</sub>/PLTL<sub>f</sub> goal</h4>
-                </label>
-                <div class="col">
-                    <input class="form-control" id="form_goal" name="form_goal" type="text"
-                           placeholder="Formula" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-6  resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>PDDL Domain D</h4>
-                        </div>
-                    </div>
-                    <div id="editor-domain"></div>
-                </div>
-                <div class="col-sm-6 resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>PDDL Problem P</h4>
-                        </div>
-                    </div>
-                    <div id="editor-problem"></div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <!-- Output -->
-        <div class="tab-pane fade" id="outputtab" role="tabpanel" aria-labelledby="output-tab">
-
-            <div class="row mt-4 mb-2">
-                <label for="staticEmail" class="col-sm-2 col-form-label"><h4>LTL<sub>f</sub>/PLTL<sub>f</sub> goal</h4>
-                </label>
-                <div class="col">
-                    <input class="form-control" id="form_goal" name="form_goal" type="text"
-                           placeholder="Formula" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-3  resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>PDDL Domain D</h4>
-                        </div>
-                    </div>
-                    <div id="editor-domain-2"></div>
-                </div>
-                <div class="col-sm-3 resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>PDDL Problem P</h4>
-                        </div>
-                    </div>
-                    <div id="editor-problem-2"></div>
-                </div>
-                <div class="col-sm-3 resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>DFA</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 resize">
-                    <div class="row">
-                        <div class="col">
-                            <h4>Policy</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    {% include 'tool.html' %}
 
 </div>
 
@@ -206,6 +89,9 @@
         crossorigin="anonymous"></script>
 
 <!--<script src="{{ url_for('static', filename='js/src-min-noconflict/ace.js') }}" type="text/javascript"-->
+<!--        charset="utf-8"></script>-->
+
+<!--<script src="{{ url_for('static', filename='js/web-planner.js') }}" type="text/javascript"-->
 <!--        charset="utf-8"></script>-->
 
 <script src="{{ url_for('static', filename='js/require.js') }}"></script>
@@ -233,72 +119,5 @@
 <!--            title: "Note",-->
 <!--            content: "The <b>:goal</b> in the PDDL problem is completely ignored in the compilation process."-->
 <!--        });-->
-
-
-<!--        $("#tool_execute").click(function () {-->
-<!--            if ($("#form_goal").val() != '' && $('#form_pddl_domain_in').val() != '' && $('#form_pddl_problem_in').val() != '') {-->
-<!--                $("#tool_execute").attr("disabled", true);-->
-<!--                $("#domain_download").addClass("disabled");-->
-<!--                $("#problem_download").addClass("disabled");-->
-<!--                document.getElementById("tool_execute").innerHTML = 'Loading <i class="ml-2 fa fa-spinner fa-spin"></i>'-->
-
-<!--                $("#form_pddl_domain_out").empty();-->
-<!--                $("#form_pddl_problem_out").empty();-->
-<!--                // $('#output-tab').tab('show');-->
-<!--                $.ajax({-->
-<!--                    url: "/compilation",-->
-<!--                    type: "POST",-->
-<!--                    data: {-->
-<!--                        form_goal: $('#form_goal').val(),-->
-<!--                        form_pddl_domain_in: $('#form_pddl_domain_in').val(),-->
-<!--                        form_pddl_problem_in: $('#form_pddl_problem_in').val()-->
-<!--                    },-->
-<!--                    success: function (response) {-->
-<!--                        $("#form_pddl_domain_out").html(response.form_pddl_domain_out);-->
-<!--                        $("#form_pddl_problem_out").html(response.form_pddl_problem_out);-->
-<!--                        $("#domain_download").removeClass("disabled");-->
-<!--                        $("#problem_download").removeClass("disabled");-->
-<!--                        $('#output-tab').tab('show');-->
-<!--                        document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'-->
-<!--                        $("#tool_execute").attr("disabled", false);-->
-<!--                    },-->
-<!--                    error: function (xhr) {-->
-<!--                        alert(xhr.error)-->
-<!--                    }-->
-<!--                });-->
-<!--            }-->
-
-<!--        });-->
-
-<!--        // Change Output to Input when Select List change-->
-<!--        $("#example_select").change(function () {-->
-<!--            $("#domain_download").addClass("disabled");-->
-<!--            $("#problem_download").addClass("disabled");-->
-<!--            document.getElementById("tool_execute").innerHTML = 'Execute <i class="ml-2 fa fa-bolt"></i>'-->
-<!--            $("#form_pddl_domain_in").empty();-->
-<!--            $("#form_pddl_problem_in").empty();-->
-<!--            $('#input-tab').tab('show');-->
-<!--            $("#form_pddl_domain_out").empty();-->
-<!--            $("#form_pddl_problem_out").empty();-->
-
-<!--            $.ajax({-->
-<!--                url: "/load-example",-->
-<!--                type: "GET",-->
-<!--                data: {jsdata: $("#example_select").val()},-->
-<!--                success: function (response) {-->
-<!--                    $("#form_goal").val(response.formula);-->
-<!--                    $("#form_pddl_domain_in").html(response.domain);-->
-<!--                    $("#form_pddl_problem_in").html(response.problem);-->
-<!--                    // $('.nav-tabs a[href="#inputtab"]').tab('show');-->
-<!--                },-->
-<!--                error: function (xhr) {-->
-<!--                    alert(xhr.error)-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-
-
-<!--    });-->
-<!--</script>-->
 
 </html>

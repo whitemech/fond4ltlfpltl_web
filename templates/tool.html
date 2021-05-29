@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="input-tab" data-bs-toggle="tab" data-bs-target="#inputtab" type="button"
+           role="tab" aria-controls="profile" aria-selected="true" href="#inputtab">Input
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="outputc-tab" data-bs-toggle="tab" data-bs-target="#outputctab" type="button"
+           role="tab" aria-controls="outputctab" aria-selected="false">Output Compilation
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="outputp-tab" data-bs-toggle="tab" data-bs-target="#outputptab" type="button"
+           role="tab" aria-controls="outputptab" aria-selected="false">Output Policy
+        </a>
+    </li>
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+
+    <!-- Input -->
+    {% include 'input.html' %}
+    <!-- Output Compilation -->
+    {% include 'out-compilation.html' %}
+    <!-- Output Policy -->
+    {% include 'out-policy.html' %}
+
+</div>
