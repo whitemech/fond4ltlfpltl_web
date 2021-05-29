@@ -137,12 +137,6 @@ $(document).ready(function () {
                                 .delay(500)
                                 .duration(1500);
                         }).renderDot(response.dfa);
-                        // d3.select("#policy_graph").graphviz({
-                        //     width: window.innerWidth - 300,
-                        //     height: window.innerHeight - 300,
-                        //     fit: false,
-                        // }).renderDot(response.dfa);
-
                         // $("#domain_download").removeClass("disabled");
                         // $("#problem_download").removeClass("disabled");
                         document.getElementById("tool_compile").innerHTML = 'Compilation only\n' +
