@@ -38,7 +38,8 @@ def plan(domain_path, problem_path, strong):
     # rm_cmd = "rm {0}/*.dot {0}/*.out".format(OUTPUT_DIR)
     # launch(rm_cmd)
 
-    planner_command = f"python {FONDSAT_DIR}/main.py {domain_path} {problem_path} -strong {strong} -policy 1 -time_limit 300"
+    planner_command = f"python {FONDSAT_DIR}/main.py {domain_path} {problem_path} -strong {strong} -policy 1 " \
+                      f"-time_limit 300"
     out = launch(planner_command)
     result = re.search(
         r"-> OUT OF TIME|-> OUT OF TIME/MEM",
@@ -59,7 +60,7 @@ def plan(domain_path, problem_path, strong):
 
 if __name__ == '__main__':
     """
-    Usage: python fondsat_wrapper.py -d <DOMAIN-PATH> -p <PROBLEM-PATH>
+    Usage: python fondsat_wrapper.py -d <DOMAIN-PATH> -p <PROBLEM-PATH> -s <STRONG>
     """
     parser = argparse.ArgumentParser(description="Wrapper for FOND-SAT.")
     parser.add_argument('-d', dest='domain_path', type=Path, required=True)

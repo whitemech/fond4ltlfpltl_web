@@ -7,6 +7,7 @@ from graphviz import Digraph
 # TODO: Alberto --> clen and comment this a bit
 def draw(file, outfile):
     G = Digraph()
+    G.graph_attr['rankdir'] = 'LR'
     infile = open(file, 'r')
 
     mapping = {}

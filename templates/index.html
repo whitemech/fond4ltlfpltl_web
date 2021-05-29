@@ -10,9 +10,9 @@
 <div class="container">
 
     <div class="row mt-2 mb-2 ">
-        <div class="col-6">
-            <div class="row">
-                <div class="col-sm-6">
+        <div class="col-sm-6 mt-2">
+            <div class="row mt-2">
+                <div class="col-sm-4 mt-2">
                     <select class="form-select form-select-md" aria-label=".form-select-md example" id="example_select">
                         <option selected>Select example</option>
                         <option value="static/examples/triangle-tire.json">triangle-tire</option>
@@ -22,9 +22,8 @@
                         <!--                    <option>5</option>-->
                     </select>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4 mt-2">
                     <select class="form-select form-select-md" aria-label=".form-select-md example" id="planner_select">
-                        <!--                        <option selected>Select FOND Planner</option>-->
                         <option value="mynd" selected>MyND Planner</option>
                         <option value="prp">PRP Planner</option>
                         <option value="fondsat">FOND-SAT Planner</option>
@@ -32,12 +31,21 @@
                         <!--                    <option>5</option>-->
                     </select>
                 </div>
+                <div class="col-sm-4 mt-2">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btncyclic" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btncyclic">Strong-Cyclic</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btnstrong" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnstrong">Strong</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="row">
+        <div class="col-sm-6 mt-2">
+            <div class="row mt-2">
 
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-2">
                     <div class="d-grid">
                         <button name="tool_compile" type="button" form="my_form" id="tool_compile"
                                 class="btn btn-primary" role="button">Compilation only
@@ -48,15 +56,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-2">
                     <div class="d-grid">
                         <button name="tool_execute" type="button" form="my_form" id="tool_execute"
                                 class="btn btn-primary" role="button">Compilation and Policy
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                            </svg>
-                            +
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
                                 <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
