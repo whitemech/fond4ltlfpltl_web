@@ -1,52 +1,58 @@
 import argparse
+import re
 from pathlib import Path
 
 from graphviz import Digraph
 
 
-# TODO: Alberto --> clen and comment this a bit
-def draw(file, outfile):
+def _dump(rgx, content, dotall):
+    """Dumps interested strings from content using re."""
+    return re.search(rgx, content, re.DOTALL).group(1).strip() if dotall else re.search(rgx, content).group(1).strip()
+
+
+def _dump_all(rgx, content, dotall):
+    """Dumps interested strings from content using re."""
+    return re.findall(rgx, content, re.DOTALL) if dotall else re.findall(rgx, content)
+
+
+def draw(in_path, out_path):
+    """Create .dot from a FOND-SAT policy in :in_path."""
     G = Digraph()
     G.graph_attr['rankdir'] = 'LR'
-    infile = open(file, 'r')
 
-    mapping = {}
+    with open(in_path, "r") as content:
+        policy = content.read()
 
-    for line in infile:
-        if line == '----------\n':
-            line = next(infile)
-            while line != '===================\n':
-                node = line.split(' ')[-1].strip().replace('(', '').replace(')', '')
-                predicate = ''.join(line.split(' ')[:-1]).replace(' ', '').replace('NegatedAtom', '').replace('Atom',
-                                                                                                              '').replace(
-                    '()', '')
-                if not node in mapping:
-                    mapping[node] = [predicate]
+    t_predicates = _dump(r"Atom \(CS\)(.*)\(CS, Action with arguments\)", policy, True).replace("===================",
+                                                                                                "").replace(
+        "___________________", "").strip()
+    t_actions = _dump(r"\(CS, Action name, CS\)(.*)\(CS, CS\)", policy, True).replace("===================",
+                                                                                      "").replace(
+        "___________________", "").strip()
 
-                else:
-                    mapping[node].append(predicate)
-                line = next(infile)
+    states = _dump_all(r"(?<=----------\n)(.*?)(?=----------\n)", t_predicates + "----------\n", True)
+    for state in states:
+        if "-NegatedAtom turndomain()" in state:
+            continue
+        temp = set()
+        node = state.split("\n")[0].split(" ")[-1].strip("()")
+        predicates = state.split("\n")
+        for p in predicates:
+            p = "".join(p.split(" ")[:-1]).replace("NegatedAtom", "").replace("Atom", "").strip()
+            if p != '':
+                temp.add(p)
+        G.node(node, "\n".join(temp))
 
-                if line == '----------\n' or line == '===================\n':
-                    mapping[node] = '\n'.join(mapping[node])
-                    G.node(node, mapping[node])
-                    line = next(infile)
+    actions = [x.strip("()").split(",") for x in t_actions.split("\n")]
+    for s, a, d in actions:
+        if "trans-" not in a:
+            rgx = f"\({d},trans-.*,(.*)\)"
+            new_dest = _dump(rgx, t_actions, False)
+            G.edge(s, new_dest,
+                   a.replace('_DETDUP_1', '').replace('_DETDUP_0', '').replace('_DETDUP_3', '').replace('_DETDUP_4',
+                                                                                                        ''))
 
-        if line == '(CS, Action name, CS)\n':
-            line = next(infile)
-            line = next(infile)
-            while line != '===================\n':
-                ini = line.split(',')[0].replace('(', '')
-                dest = line.split(',')[-1].replace(')\n', '')
-                action = line.split(',')[1].replace('_DETDUP_1', '').replace('_DETDUP_0', '').replace('_DETDUP_3',
-                                                                                                      '').replace(
-                    '_DETDUP_4', '')
-                # G.add_edge(ini,dest)
-                G.edge(ini, dest, action)
-                line = next(infile)
-
-    # directory = file.replace(file, outfile)
-    G.save(outfile)
+    G.save(out_path)
 
 
 if __name__ == '__main__':
