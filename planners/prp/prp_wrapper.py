@@ -15,7 +15,7 @@ PLANNERS_DIR = str(Path(PRP_DIR, "..").resolve())  # type: ignore
 OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type: ignore
 
 
-def launch(cmd, debug=False):
+def launch(cmd):
     """Launch a command."""
     process = Popen(
         args=cmd,
@@ -27,26 +27,27 @@ def launch(cmd, debug=False):
     )
     try:
         output, error = process.communicate(timeout=30)
-        return str(error).strip() if debug else str(output).strip()
+        return str(output).strip(), str(error).strip()
     except TimeoutExpired:
         os.killpg(os.getpgid(process.pid), signal.SIGTERM)
-        return False
+        return None, None
 
 
 def plan(domain_path, problem_path):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
     rm_cmd = "rm {0}/*.dot {0}/*.out".format(OUTPUT_DIR)
     launch(rm_cmd)
-    planner_command = f"./{PRP_DIR}/prp {domain_path} {problem_path} --dump-policy 2"
-    out = launch(planner_command)
+    planner_command = f"{PRP_DIR}/prp {domain_path} {problem_path} --dump-policy 2"
+    out, err = launch(planner_command)
     result = re.search(
         r"No solution .*",
         out,
     )
     if result:
         print(out)
+    elif err:
+        print(err)
     else:
-        assert result is None
         # Translate the policy from SAS+ to instantiated standard facts
         mapping, _ = translator.translate('output', 'policy.out', f'{OUTPUT_DIR}/policy-translated.out')
         # Validate the policy (from the initial state to the goal state) and generate the data structure
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     """
     Usage: python prp_wrapper.py -d <DOMAIN-PATH> -p <PROBLEM-PATH>
     """
-    parser = argparse.ArgumentParser(description="Wrapper for PRP.")
+    parser = argparse.ArgumentParser(description="Wrapper for prp.")
     parser.add_argument('-d', dest='domain_path', type=Path, required=True)
     parser.add_argument('-p', dest='problem_path', type=Path, required=True)
     args = parser.parse_args()

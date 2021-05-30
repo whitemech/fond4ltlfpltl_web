@@ -85,7 +85,7 @@ def get_initial_invariants(task):
 
 # Input file might be grounded, beware of too many invariant candidates
 MAX_CANDIDATES = 100000
-#MAX_TIME = 300 <-- This is now set in the PRP script and passed in as an argument
+#MAX_TIME = 300 <-- This is now set in the prp script and passed in as an argument
 
 def find_invariants(task, reachable_action_params):
     candidates = deque(get_initial_invariants(task))

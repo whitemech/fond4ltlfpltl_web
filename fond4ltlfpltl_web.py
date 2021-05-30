@@ -14,10 +14,7 @@ from ltlf2dfa.parser.pltlf import ParsingError, PLTLfParser
 PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = PACKAGE_DIR / Path("static") / Path("output")
 PLANNERS_DIR = PACKAGE_DIR / Path("planners")
-MYND_DIR = PACKAGE_DIR / PLANNERS_DIR / Path("MyND")
-PRP_DIR = PACKAGE_DIR / PLANNERS_DIR / Path("PRP")
-FONDSAT_DIR = PACKAGE_DIR / PLANNERS_DIR / Path("FOND-SAT")
-
+PLANNER_DIR = PACKAGE_DIR / PLANNERS_DIR
 
 app = Flask(__name__)
 
@@ -37,10 +34,18 @@ def launch(cmd, debug=False):
     )
     try:
         output, error = process.communicate(timeout=30)
-        return str(error).strip() if debug else str(output).strip()
+        return str(output).strip(), str(error).strip()
     except TimeoutExpired:
         os.killpg(os.getpgid(process.pid), signal.SIGTERM)
-        return False
+        return None, None
+
+
+def _call_wrapper(planner, d, p, s="0"):
+    """Call the planner wrapper."""
+    cmd = f"python {PLANNER_DIR}/{Path(planner)}/{planner}_wrapper.py -d {d} -p {p}"
+    if planner != "prp":
+        cmd = cmd + f" -s {s}"
+    return launch(cmd)
 
 
 def _compilation(d, p, f):
@@ -126,45 +131,51 @@ def plan():
         dom_path = OUTPUT_DIR / "new-domain.pddl"
         prob_path = OUTPUT_DIR / "new-problem.pddl"
 
-        # call to planner and handle output
+        result = {"form_pddl_domain_out": str(domain_prime),
+                  "form_pddl_problem_out": str(problem_prime),
+                  "formula": str(p_formula),
+                  "dfa": str(mona_output),
+                  "policy_found": False,
+                  "error": "Policy not found.",
+                  "policy_txt": "",
+                  "policy_dot": ""}
+
+        ok = False
         if planner == "mynd":
-            cmd = f"python {MYND_DIR}/mynd_wrapper.py -d {dom_path} -p {prob_path} -s {policy_type}"
-            err = launch(cmd)
-            if err:
-                return jsonify({'form_pddl_domain_out': str(domain_prime),
-                                'form_pddl_problem_out': str(problem_prime),
-                                'formula': str(p_formula),
-                                'dfa': str(mona_output),
-                                'error': str(err)})
-        elif planner == "prp":
-            cmd = f"python {PRP_DIR}/prp_wrapper.py -d {dom_path} -p {prob_path}"
-            err = launch(cmd)
-            if err:
-                return jsonify({'form_pddl_domain_out': str(domain_prime),
-                                'form_pddl_problem_out': str(problem_prime),
-                                'formula': str(p_formula),
-                                'dfa': str(mona_output),
-                                'error': str(err)})
+            out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)
+            if out:
+                result["policy_txt"] = out
+            elif err:
+                result["error"] = err
             else:
-                p = Path(f"{OUTPUT_DIR}/plan/policy-translated.out").rename("policy")
-                p.rename(p.with_suffix(".txt"))
+                ok = True
+        elif planner == "prp":
+            out, err = _call_wrapper(planner, dom_path, prob_path)
+            if out:
+                result["policy_txt"] = out
+            elif err:
+                result["error"] = err
+            else:
+                ok = True
+                Path(f"{OUTPUT_DIR}/plan/policy-translated.out").rename(f"{OUTPUT_DIR}/plan/policy.txt")
         else:
             assert planner == "fondsat"
-            cmd = f"python {FONDSAT_DIR}/fondsat_wrapper.py -d {dom_path} -p {prob_path} -s {policy_type}"
-            err = launch(cmd)
-            if err:
-                return jsonify({'form_pddl_domain_out': str(domain_prime),
-                                'form_pddl_problem_out': str(problem_prime),
-                                'formula': str(p_formula),
-                                'dfa': str(mona_output),
-                                'error': str(err)})
+            out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)
+            if out:
+                result["policy_txt"] = out
+            elif err:
+                result["error"] = err
+            else:
+                ok = True
 
-        return jsonify({'form_pddl_domain_out': str(domain_prime),
-                        'form_pddl_problem_out': str(problem_prime),
-                        'formula': str(p_formula),
-                        'dfa': str(mona_output),
-                        'policy_txt': str(open(f"{OUTPUT_DIR}/plan/policy.txt", "r").read()),
-                        'policy_dot': str(open(f"{OUTPUT_DIR}/plan/policy.dot", "r").read())})
+        if ok:
+            result["policy_found"] = True
+            result["error"] = ""
+            result["policy_txt"] = str(open(f"{OUTPUT_DIR}/plan/policy.txt", "r").read())
+            result["policy_dot"] = str(open(f"{OUTPUT_DIR}/plan/policy.dot", "r").read())
+
+        return jsonify(result)
+
     except Exception as e:
         return jsonify({'error': str(e)})
 

@@ -19,7 +19,7 @@ def get_value(text, regex):
 
 
 def process_policy(policy):
-    """Process the PRP policy removing trans."""
+    """Process the prp policy removing trans."""
     with open(policy, "r") as f:
         policy_with_trans = f.read()
 

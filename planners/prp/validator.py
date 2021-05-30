@@ -1,6 +1,6 @@
 """
  Author: Ramon Fraga Pereira
- Adapted from PRP planner (https://github.com/QuMuLab/planner-for-relevant-policies).
+ Adapted from prp planner (https://github.com/QuMuLab/planner-for-relevant-policies).
 """
 
 import os, importlib

@@ -81,8 +81,10 @@ $(document).ready(function () {
             editor_p.setValue("");
             editor_d2.setValue("");
             editor_p2.setValue("");
-            $('#input-tab').tab('show');
+            $("#input-tab").tab("show");
             $(".graph").html("");
+            $("#policy_text").html("");
+            $("#policy_graph").html("");
             $("#form_goal_c").val("");
             $("#form_goal_p").val("");
             $.ajax({
@@ -157,7 +159,7 @@ $(document).ready(function () {
             }
         });
 
-        // API :compile
+        // API :plan
         $("#tool_execute").click(function () {
             if ($("#form_goal").val() !== '' && editor_d.getValue() !== '' && editor_p.getValue() !== '') {
                 $(this).attr("disabled", true);
@@ -178,7 +180,14 @@ $(document).ready(function () {
                 }
                 const chosen_planner = $("#planner_select").val();
                 if (chosen_planner === "prp" && policy_type === 1) {
-                    alert("PRP does not support strong policies.")
+                    alert("PRP does not support strong policies.");
+                    $("#tool_compile").attr("disabled", false);
+                    $("#tool_execute").attr("disabled", false);
+                    document.getElementById("tool_execute").innerHTML = 'Compilation and Policy\n' +
+                        '                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"\n' +
+                        '                                 class="bi bi-gear-fill" viewBox="0 0 16 16">\n' +
+                        '                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>\n' +
+                        '                            </svg>';
                 } else {
                     $.ajax({
                         url: "/plan",
@@ -199,11 +208,6 @@ $(document).ready(function () {
                                 width: window.innerWidth - 300,
                                 height: window.innerHeight - 300,
                                 fit: false
-                            }).transition(function () {
-                                return d3.transition("main")
-                                    .ease(d3.easeLinear)
-                                    .delay(500)
-                                    .duration(1500);
                             }).renderDot(response.dfa);
                             // $("#domain_download").removeClass("disabled");
                             // $("#problem_download").removeClass("disabled");
@@ -214,11 +218,9 @@ $(document).ready(function () {
                                 '                            </svg>';
                             $("#tool_execute").attr("disabled", false);
                             $("#tool_compile").attr("disabled", false);
-                            if (response.error) {
-                                $("#policy_text").html(response.error);
-                                $("#policy_graph").html("No policy found. See text for more details.");
-                                alert(chosen_planner + " didn't find the policy. Try with another planner from the list.")
-                            } else {
+
+                            if (response.policy_found) {
+                                // everything went good
                                 $("#policy_text").html(response.policy_txt);
                                 d3.select("#policy_graph").graphviz({
                                     width: window.innerWidth - 300,
@@ -230,6 +232,13 @@ $(document).ready(function () {
                                         .delay(500)
                                         .duration(1500);
                                 }).renderDot(response.policy_dot);
+                            } else {
+                                if (response.policy_txt !== "") {
+                                    $("#policy_text").html(response.policy_txt);
+                                    $("#policy_graph").html("No policy found. See text for more details.");
+                                } else {
+                                    alert(response.error)
+                                }
                             }
                             $('#outputp-tab').tab('show');
                         },

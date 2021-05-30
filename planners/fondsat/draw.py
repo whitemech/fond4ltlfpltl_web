@@ -53,7 +53,7 @@ if __name__ == '__main__':
     """
     Usage: python draw.py -i <POLICY-PATH> -o <GRAPH-PATH>
     """
-    parser = argparse.ArgumentParser(description="Wrapper for FOND-SAT.")
+    parser = argparse.ArgumentParser(description="Wrapper for fondsat.")
     parser.add_argument('-i', dest='policy_path', type=Path, required=True)
     parser.add_argument('-o', dest='graph_path', type=Path, required=True)
     args = parser.parse_args()

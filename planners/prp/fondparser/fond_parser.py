@@ -1,6 +1,6 @@
 """
  Author: Ramon Fraga Pereira
- Adapted from FOND-SAT planner.
+ Adapted from fondsat planner.
 """
 
 import os
