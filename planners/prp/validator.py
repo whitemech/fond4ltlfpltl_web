@@ -5,6 +5,7 @@
 
 import os, importlib
 import argparse
+import tempfile
 import fondparser
 from normalizer import flatten
 from fondparser.fond_parser import Parser
@@ -134,7 +135,6 @@ def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
                 eff_val.append(((set(), [d])))
 
             val = VALAction(pre_list, eff_val, a_name, unfluents)
-
             actions[a_name] = val
 
     global init_state
@@ -152,18 +152,25 @@ def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
     nodes = {init_state: 1, goal_state: 2}
     node_index = 3
 
-    G = nx.MultiDiGraph()
+    G = nx.DiGraph()
+    # G.graph['graph'] = {'rankdir': 'LR'}
     G.add_node(1, label="s0")
     G.add_node(2, label="G")
 
-    module_validator.load(sol, fluents)
+    fd, path = tempfile.mkstemp()
+    try:
+        with os.fdopen(fd, 'w') as tmp:
+            tmp.write(sol)
+        module_validator.load(path, fluents)
+    finally:
+        os.remove(path)
     unhandled = []
 
     # print("\nStarting the FOND simulation...")
     while open_list:
         u = open_list.pop(0)
         assert nodes[u] in G
-
+        #
         # print("\n--------\nHandling state:")
         # print(_state_string(unfluents, u))
         # print()
@@ -190,12 +197,13 @@ def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
                         elif v not in nodes:
                             nodes[v] = node_index
                             node_index += 1
-                            G.add_node(nodes[v], label=node_index-1)
+                            G.add_node(nodes[v], label=_state_string(unfluents, v))
                             open_list.append(v)
 
                         states_to_actions[str(nodes[u]) + ' -> ' + str(nodes[v])] = a
                         G.add_edge(nodes[u], nodes[v], label="%s (%d)" % (a, i))
                 else:
+                    # here we handle trans actions
                     v = progress(u, actions[a], unfluents)
                     # print("\nNew state:")
                     # print(_state_string(unfluents, v))
@@ -206,7 +214,7 @@ def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
                     elif v not in nodes:
                         nodes[v] = node_index
                         node_index += 1
-                        G.add_node(nodes[v], label=node_index-1)
+                        G.add_node(nodes[v], label=_state_string(unfluents, v))
                         open_list.append(v)
 
                     states_to_actions[str(nodes[u]) + ' -> ' + str(nodes[v])] = a
