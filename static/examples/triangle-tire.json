@@ -1,5 +1,5 @@
 {
-  "formula": "vehicleat_l31 & O(vehicleat_l12)",
+  "formula": "vehicleat_l22 & O(vehicleat_l31)",
   "domain": "(define (domain triangle-tire)\n  (:requirements :typing :strips :non-deterministic)\n  (:types location)\n  (:predicates (vehicleat ?loc - location)\n\t       (spare-in ?loc - location)\n\t       (road ?from - location ?to - location)\n\t       (not-flattire))\n  (:action move-car\n    :parameters (?from - location ?to - location)\n    :precondition (and (vehicleat ?from) (road ?from ?to) (not-flattire))\n    :effect (and\n\t\t (oneof (and (vehicleat ?to) (not (vehicleat ?from)))\n\t\t\t(and (vehicleat ?to) (not (vehicleat ?from)) (not (not-flattire))))))\n\n  (:action changetire\n    :parameters (?loc - location)\n    :precondition (and (spare-in ?loc) (vehicleat ?loc))\n    :effect (and (not (spare-in ?loc)) (not-flattire)))\n)\n",
   "problem": "(define (problem triangle-tire-1)\n  (:domain triangle-tire)\n  (:objects l11 l12 l13 l21 l22 l31 - location)\n  (:init (vehicleat l11)\n    (road l11 l12) (road l12 l13) (road l11 l21)\n    (road l21 l22) (road l21 l12) (road l13 l22) (road l21 l31)\n    (road l31 l22) (spare-in l21) (spare-in l22)\n    (spare-in l31) (not-flattire))\n  (:goal (vehicleat l22))\n)\n"
 }
