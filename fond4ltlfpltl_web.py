@@ -1,4 +1,3 @@
-import signal
 from pathlib import Path
 from subprocess import TimeoutExpired, PIPE, Popen
 
@@ -8,6 +7,8 @@ from fond4ltlfpltlf.core import execute
 import os
 import json
 import shutil
+import time
+import signal
 
 from ltlf2dfa.parser.ltlf import LTLfParser
 from ltlf2dfa.parser.pltlf import ParsingError, PLTLfParser
@@ -113,11 +114,14 @@ def compilation():
     in_problem = request.form['form_pddl_problem_in']
 
     try:
+        c_start = time.perf_counter()
         domain_prime, problem_prime, p_formula, mona_output = _compilation(in_domain, in_problem, formula)
+        c_end = time.perf_counter()
         return jsonify({'form_pddl_domain_out': str(domain_prime),
                         'form_pddl_problem_out': str(problem_prime),
                         'formula': str(p_formula),
-                        'dfa': str(mona_output)})
+                        'dfa': str(mona_output),
+                        'elapsed_time': str(c_end - c_start)})
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -131,6 +135,7 @@ def plan():
     policy_type = request.form['policy_type']
 
     try:
+        p_start = time.perf_counter()
         domain_prime, problem_prime, p_formula, mona_output = _compilation(in_domain, in_problem, formula)
         dom_path = OUTPUT_DIR / "new-domain.pddl"
         prob_path = OUTPUT_DIR / "new-problem.pddl"
@@ -142,11 +147,13 @@ def plan():
                   "policy_found": False,
                   "error": "Policy not found.",
                   "policy_txt": "",
-                  "policy_dot": ""}
+                  "policy_dot": "",
+                  "elapsed_time": "-1",}
 
         ok = False
         if planner == "mynd":
             out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)
+            p_end = time.perf_counter()
             if out:
                 result["policy_txt"] = out
             elif err:
@@ -155,6 +162,7 @@ def plan():
                 ok = True
         elif planner == "prp":
             out, err = _call_wrapper(planner, dom_path, prob_path)
+            p_end = time.perf_counter()
             if out:
                 result["policy_txt"] = out
             elif err:
@@ -165,6 +173,7 @@ def plan():
         else:
             assert planner == "fondsat"
             out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)
+            p_end = time.perf_counter()
             if out:
                 result["policy_txt"] = out
             elif err:
@@ -172,6 +181,7 @@ def plan():
             else:
                 ok = True
 
+        result["elapsed_time"] = str(p_end - p_start)
         if ok:
             result["policy_found"] = True
             result["error"] = ""

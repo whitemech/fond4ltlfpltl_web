@@ -22,14 +22,15 @@ $(document).ready(function () {
                 enableBasicAutocompletion: true,
                 enableSnippets: true,
                 enableLiveAutocompletion: true,
-                setBehavioursEnabled: false
             });
+            editor.setBehavioursEnabled(true);
             editors.push(editor)
         }
         var editor_d = editors[0];
         var editor_p = editors[1]
         var editor_d2 = editors[2]
         var editor_p2 = editors[3]
+
         function resizeAce() {
             $(".editor").height(window.innerHeight - MYHEIGHT);
             editor_d.resize();
@@ -37,6 +38,7 @@ $(document).ready(function () {
             editor_d2.resize();
             editor_p2.resize();
         }
+
         //listen for changes
         $(window).resize(resizeAce);
         //set initially
@@ -114,6 +116,10 @@ $(document).ready(function () {
                         $("#tool_compile").attr("disabled", false);
                         $("#download").attr("disabled", false);
                         $('#outputc-tab').tab('show');
+                        $("#toast-body").html("Elapsed time: " + response.elapsed_time + " s");
+                        var myAlert = document.getElementById('toast');
+                        var bsAlert = new bootstrap.Toast(myAlert);
+                        bsAlert.show();
                     },
                     error: function (xhr) {
                         alert(xhr.error)
@@ -202,6 +208,10 @@ $(document).ready(function () {
                             }
                             $("#download").attr("disabled", false);
                             $('#outputp-tab').tab('show');
+                            $("#toast-body").html("Elapsed time: " + response.elapsed_time + " s");
+                            var myAlert = document.getElementById('toast');
+                            var bsAlert = new bootstrap.Toast(myAlert);
+                            bsAlert.show();
                         },
                         error: function (xhr) {
                             alert(xhr.error)
