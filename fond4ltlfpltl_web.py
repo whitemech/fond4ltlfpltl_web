@@ -2,11 +2,12 @@ import signal
 from pathlib import Path
 from subprocess import TimeoutExpired, PIPE, Popen
 
-from flask import Flask, render_template, request, jsonify, url_for, Response
+from flask import Flask, render_template, request, jsonify, url_for, send_file
 from fond4ltlfpltlf.core import execute
 
 import os
 import json
+import shutil
 
 from ltlf2dfa.parser.ltlf import LTLfParser
 from ltlf2dfa.parser.pltlf import ParsingError, PLTLfParser
@@ -15,6 +16,7 @@ PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = PACKAGE_DIR / Path("static") / Path("output")
 PLANNERS_DIR = PACKAGE_DIR / Path("planners")
 PLANNER_DIR = PACKAGE_DIR / PLANNERS_DIR
+DOWNLOAD = Path("fond4ltlfpltlf-output")
 
 app = Flask(__name__)
 
@@ -76,11 +78,15 @@ def _compilation(d, p, f):
     mona_output = p_formula.to_dfa(mona_dfa_out=False)
     mona_output = mona_output.replace("LR", "TB")
 
+    with open(f"{OUTPUT_DIR}/dfa.dot", "w+") as p:
+        p.write(mona_output)
+
     return domain_prime, problem_prime, p_formula, mona_output
 
 
 @app.route('/')
 def index():
+    launch(f"rm {OUTPUT_DIR}/* {OUTPUT_DIR}/plan/* {PACKAGE_DIR}/{DOWNLOAD}.zip")
     return render_template("index.html")
 
 
@@ -94,12 +100,10 @@ def load():
         return jsonify({'error': str(e)})
 
 
-@app.route('/download/<string:file>')
-def download(file):
-    return Response(
-        open(f"{OUTPUT_DIR}/{file}"),
-        mimetype="text/plain",
-        headers={"Content-disposition": "attachment; filename={}".format(file)})
+@app.route('/download')
+def download():
+    shutil.make_archive(DOWNLOAD, 'zip', OUTPUT_DIR)
+    return send_file(f"{DOWNLOAD}.zip", mimetype='application/zip', as_attachment=True)
 
 
 @app.route('/compile', methods=['POST'])

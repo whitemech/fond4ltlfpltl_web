@@ -1,8 +1,3 @@
-<!--<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light shadow border">-->
-<!--    &lt;!&ndash; <img class="navbar-brand" src="static/images/wordcloud.png" alt="logo"> &ndash;&gt;-->
-<!--    <span class="ml-3 navbar-brand" href="#"> <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> </span>-->
-<!--</nav>-->
-
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border">
     <div class="container-fluid">
         <a class="navbar-brand" href="/"><b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b></a>
@@ -24,17 +19,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#aboutModal" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
                 </li>
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"-->
-                <!--                       data-bs-toggle="dropdown" aria-expanded="false">-->
-                <!--                        Dropdown link-->
-                <!--                    </a>-->
-                <!--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
-                <!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -42,58 +26,135 @@
 
 <!-- Usage Modal -->
 <div class="modal fade" id="usageModal" tabindex="-1" aria-labelledby="usageModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="usageModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         Usage
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usageModalLabel">Usage</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Usage
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- API Modal -->
 <div class="modal fade" id="apiModal" tabindex="-1" aria-labelledby="apiModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="apiModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         APIs
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="apiModalLabel">API</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                APIs
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <!-- About Modal -->
 <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="aboutModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-            About
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
-      </div>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalLabel">About</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-justify">
+                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> is a tool that compiles Fully Observable
+                    Non-Deterministic domain models with temporally extended goals, specified either in LTL<sub>f</sub>
+                    or in PLTL<sub>f</sub>, into standard FOND planning problems and computes the policy, if it exists,
+                    with
+                    publicly available off-the-shelf FOND planners.
+                </p>
+
+                <h5>Citing</h5>
+                <p class="text-justify">
+                    If you are interested in this tool, and you use it in your own work, please consider citing it.<br>
+                    <a href="https://doi.org/10.5281/zenodo.4876281"><img
+                            src="https://zenodo.org/badge/DOI/10.5281/zenodo.4876281.svg" alt="DOI"></a>
+                </p>
+                <h5>License</h5>
+                <p class="text-justify">
+                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> is licensed under the GNU Lesser General
+                    Public License v3 or later License
+                    (<a target="_blank" href="https://www.gnu.org/licenses/lgpl-3.0.html">LGPLv3+</a>).
+                </p>
+
+                <h5>Author</h5>
+                <p class="text-justify">
+                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> is developed and maintained by <a
+                        target="_blank"
+                        href="https://francescofuggitti.github.io/">Francesco
+                    Fuggitti</a>.
+                </p>
+
+                <h5>Acknowledgments</h5>
+                <p class="text-justify">
+                    This project (&copy 2018-
+                    <script>document.write(new Date().getFullYear())</script>
+                    ) is proudly funded by the
+                    <a target="_blank" href="https://whitemech.github.io">ERC Advanced Grant WhiteMech</a> no.834228 and
+                    the EU ICT-48 2020 project <a target="_blank" href="https://tailor-network.eu">TAILOR</a>
+                    no.952215.
+                </p>
+
+                <h5>References</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <b>Pure-Past Linear Temporal and Dynamic Logic on Finite Traces</b>
+                        <br>
+                        De Giacomo, G.; Di Stasio, A.; Fuggitti, F.; Rubin, S.<br>
+                        In IJCAI, Survey Track, 2020.
+                    </li>
+                    <li class="list-group-item">
+                        <b>LTL and Past LTL on Finite Traces for Planning and Declarative Process Mining</b>
+                        <br>
+                        Fuggitti F. <br>
+                        In M.Sc. Thesis. Sapienza University of Rome, 2018
+                    </li>
+                    <li class="list-group-item">
+                        <b>Compact Policies for Fully Observable Non-Deterministic Planning as SAT</b>
+                        <br>
+                        Geffner, T. and Geffner, H.<br>
+                        In ICAPS, 2018.
+                    </li>
+                    <li class="list-group-item">
+                        <b>Linear Temporal Logic and Linear Dynamic Logic on Finite Traces</b>
+                        <br>
+                        De Giacomo, G. and Vardi, M. Y.<br>
+                        In IJCAI, 2013.
+                    </li>
+                    <li class="list-group-item">
+                        <b>Improved Non-deterministic Planning by Exploiting State Relevance</b>
+                        <br>
+                        Muise, C.; McIlraith, S.; Beck, C. J.<br>
+                        In ICAPS, 2012
+                    </li>
+                    <li class="list-group-item">
+                        <b>Pattern Database Heuristics for Fully Observable Nondeterministic Planning</b>
+                        <br>
+                        Robert Mattm{\"{u}}ller, R.; Ortlieb, M.; Helmert, M.; Bercher, P.<br>
+                        In ICAPS, 2010.
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
     </div>
-  </div>
 </div>
