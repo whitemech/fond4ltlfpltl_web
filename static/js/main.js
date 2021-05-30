@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const MYHEIGHT = 300;
     require.config({
         paths: {
             ace: "static/js/ace/lib/ace"
@@ -10,62 +11,32 @@ $(document).ready(function () {
     ], function (ace, lang_tools) {
         ace.require("ace/ext/language_tools");
 
-        // input tab
-        var editor_d = ace.edit("editor-domain");
-        editor_d.setTheme("ace/theme/monokai");
-        editor_d.getSession().setMode("ace/mode/pddl");
-        editor_d.setOption("fontSize", "14pt");
-        editor_d.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true,
-            // minLines: 50,
-            // maxLines: Infinity
-        });
-        editor_d.setBehavioursEnabled(false);
-
-        var editor_p = ace.edit("editor-problem");
-        editor_p.setTheme("ace/theme/monokai");
-        editor_p.getSession().setMode("ace/mode/pddl");
-        editor_p.setOption("fontSize", "14pt");
-        editor_p.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        editor_p.setBehavioursEnabled(true);
-
-        // output tab
-        var editor_d2 = ace.edit("editor-domain-2");
-        editor_d2.setTheme("ace/theme/monokai");
-        editor_d2.getSession().setMode("ace/mode/pddl");
-        editor_d2.setOption("fontSize", "14pt");
-        editor_d2.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        editor_d2.setBehavioursEnabled(true);
-
-        var editor_p2 = ace.edit("editor-problem-2");
-        editor_p2.setTheme("ace/theme/monokai");
-        editor_p2.getSession().setMode("ace/mode/pddl");
-        editor_p2.setOption("fontSize", "14pt");
-        editor_p2.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        editor_p2.setBehavioursEnabled(true);
-
+        ids = ["editor-domain", "editor-problem", "editor-domain-2", "editor-problem-2"]
+        editors = []
+        for (let i = 0; i < 4; i++) {
+            var editor = ace.edit(ids[i]);
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/pddl");
+            editor.setOptions({
+                fontSize: "14pt",
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true,
+                setBehavioursEnabled: false
+            });
+            editors.push(editor)
+        }
+        var editor_d = editors[0];
+        var editor_p = editors[1]
+        var editor_d2 = editors[2]
+        var editor_p2 = editors[3]
         function resizeAce() {
-            $(".editor").height(window.innerHeight - 300);
+            $(".editor").height(window.innerHeight - MYHEIGHT);
             editor_d.resize();
             editor_p.resize();
             editor_d2.resize();
             editor_p2.resize();
         }
-
         //listen for changes
         $(window).resize(resizeAce);
         //set initially
@@ -81,8 +52,6 @@ $(document).ready(function () {
             editor_d2.setValue("");
             editor_p2.setValue("");
             $("#input-tab").tab("show");
-            // $(".graph").html("");
-            // $("#policy_graph").html("");
             $("#policy_text").html("");
             $("#form_goal_c").val("");
             $("#form_goal_p").val("");
@@ -94,7 +63,6 @@ $(document).ready(function () {
                     $("#form_goal").val(response.formula);
                     editor_d.setValue(response.domain);
                     editor_p.setValue(response.problem);
-                    // $('.nav-tabs a[href="#inputtab"]').tab('show');
                     d3.select("#compile_graph").select("svg").session_destroy;
                     d3.select("#policy_graph").select("svg").session_destroy;
                 },
@@ -128,8 +96,8 @@ $(document).ready(function () {
                         editor_d2.setValue(response.form_pddl_domain_out);
                         editor_p2.setValue(response.form_pddl_problem_out);
                         d3.select("#compile_graph").graphviz({
-                            width: window.innerWidth - 300,
-                            height: window.innerHeight - 300,
+                            width: window.innerWidth - MYHEIGHT,
+                            height: window.innerHeight - MYHEIGHT,
                             fit: false
                         }).transition(function () {
                             return d3.transition("main")
@@ -161,15 +129,12 @@ $(document).ready(function () {
             if ($("#form_goal").val() !== '' && editor_d.getValue() !== '' && editor_p.getValue() !== '') {
                 $(this).attr("disabled", true);
                 $("#tool_compile").attr("disabled", true);
-                $('#policy_text').css('height', window.innerHeight - 300);
-                // $("#domain_download").addClass("disabled");
-                // $("#problem_download").addClass("disabled");
+                $('#policy_text').css('height', window.innerHeight - MYHEIGHT);
                 $(this).html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                 );
                 editor_d2.setValue("");
                 editor_p2.setValue("");
-                // set strong-cyclic or strong
                 var policy_type = 0;
                 if ($("#btnstrong").is(":checked")) {
                     policy_type = 1;
@@ -202,8 +167,8 @@ $(document).ready(function () {
                             editor_p2.setValue(response.form_pddl_problem_out);
 
                             d3.select("#compile_graph").graphviz({
-                                width: window.innerWidth - 300,
-                                height: window.innerHeight - 300,
+                                width: window.innerWidth - MYHEIGHT,
+                                height: window.innerHeight - MYHEIGHT,
                                 fit: false
                             }).renderDot(response.dfa);
                             document.getElementById("tool_execute").innerHTML = 'Compile + Plan\n' +
@@ -218,8 +183,8 @@ $(document).ready(function () {
                                 // everything went good
                                 $("#policy_text").html(response.policy_txt);
                                 d3.select("#policy_graph").graphviz({
-                                    width: window.innerWidth - 300,
-                                    height: window.innerHeight - 300,
+                                    width: window.innerWidth - MYHEIGHT,
+                                    height: window.innerHeight - MYHEIGHT,
                                     fit: true
                                 }).transition(function () {
                                     return d3.transition("main")
