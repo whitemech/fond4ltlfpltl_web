@@ -169,7 +169,7 @@ def plan():
                 result["error"] = err
             else:
                 ok = True
-                Path(f"{OUTPUT_DIR}/plan/policy-translated.out").rename(f"{OUTPUT_DIR}/plan/policy.txt")
+                # Path(f"{OUTPUT_DIR}/plan/policy-translated.out").rename(f"{OUTPUT_DIR}/plan/policy.txt")
         else:
             assert planner == "fondsat"
             out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)

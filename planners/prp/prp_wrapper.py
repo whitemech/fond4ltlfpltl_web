@@ -37,7 +37,7 @@ def plan(domain_path, problem_path):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
     rm_cmd = "rm {0}/*.dot {0}/*.out".format(OUTPUT_DIR)
     launch(rm_cmd)
-    planner_command = f"./{PRP_DIR}/prp {domain_path} {problem_path} --dump-policy 2"
+    planner_command = f"{PRP_DIR}/prp {domain_path} {problem_path} --dump-policy 2"
     out, err = launch(planner_command)
     result = re.search(
         r"No solution .*",

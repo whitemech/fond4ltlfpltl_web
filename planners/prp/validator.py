@@ -153,7 +153,7 @@ def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
     node_index = 3
 
     G = nx.DiGraph()
-    # G.graph['graph'] = {'rankdir': 'LR'}
+    G.graph['graph'] = {'rankdir': 'LR'}
     G.add_node(1, label="s0")
     G.add_node(2, label="G")
 
