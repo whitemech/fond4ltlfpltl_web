@@ -1,14 +1,15 @@
 $(document).ready(function () {
     const MYHEIGHT = 300;
     require.config({
+        baseUrl: "static/js",
         paths: {
-            ace: "static/js/ace/lib/ace"
+            ace: "ace/lib/ace"
         }
     })
     require([
         'ace/ace',
         'ace/ext/language_tools',
-    ], function (ace, lang_tools) {
+    ], function (ace) {
         ace.require("ace/ext/language_tools");
 
         ids = ["editor-domain", "editor-problem", "editor-domain-2", "editor-problem-2"]
