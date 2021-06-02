@@ -39,7 +39,7 @@ def plan(domain_path, problem_path, strong):
     # launch(rm_cmd)
 
     planner_command = f"python {FONDSAT_DIR}/main.py {domain_path} {problem_path} -strong {strong} -policy 1 " \
-                      f"-time_limit 10"
+                      f"-time_limit 300"
     out, err = launch(planner_command)
     result = re.search(
         r"-> OUT OF TIME|-> OUT OF TIME/MEM",

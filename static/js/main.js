@@ -16,7 +16,7 @@ $(document).ready(function () {
         editors = []
         for (let i = 0; i < 4; i++) {
             var editor = ace.edit(ids[i]);
-            editor.setTheme("ace/theme/monokai");
+            editor.setTheme("ace/theme/textmate");
             editor.getSession().setMode("ace/mode/pddl");
             editor.setOptions({
                 fontSize: "14pt",
@@ -136,6 +136,7 @@ $(document).ready(function () {
             if ($("#form_goal").val() !== '' && editor_d.getValue() !== '' && editor_p.getValue() !== '') {
                 $(this).attr("disabled", true);
                 $("#tool_compile").attr("disabled", true);
+                $("#policy_graph").html("");
                 $('#policy_text').css('height', window.innerHeight - MYHEIGHT);
                 $(this).html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
