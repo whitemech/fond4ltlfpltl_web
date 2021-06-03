@@ -3,6 +3,7 @@ import re
 import argparse
 import signal
 import inspect
+import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
@@ -15,6 +16,7 @@ OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type:
 def launch(cmd):
     """Launch a command."""
     process = Popen(
+        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
@@ -34,9 +36,6 @@ def plan(domain_path, problem_path, strong):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
     rm_cmd = "rm {0}/*.dot {0}/*.txt".format(OUTPUT_DIR)
     launch(rm_cmd)
-
-    # rm_cmd = "rm {0}/*.dot {0}/*.out".format(OUTPUT_DIR)
-    # launch(rm_cmd)
 
     planner_command = f"python {FONDSAT_DIR}/main.py {domain_path} {problem_path} -strong {strong} -policy 1 " \
                       f"-time_limit 300"

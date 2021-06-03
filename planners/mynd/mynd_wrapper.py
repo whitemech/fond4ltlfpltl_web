@@ -3,6 +3,7 @@ import argparse
 import re
 import signal
 import inspect
+import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
@@ -15,6 +16,7 @@ OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type:
 def launch(cmd):
     """Launch a command."""
     process = Popen(
+        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,

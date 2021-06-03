@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 from subprocess import TimeoutExpired, PIPE, Popen
 
@@ -28,6 +29,7 @@ PAST_OPS = {"Y", "O", "S", "H"}
 def launch(cmd):
     """Launch a command."""
     process = Popen(
+        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
