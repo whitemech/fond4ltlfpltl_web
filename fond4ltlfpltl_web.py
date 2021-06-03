@@ -25,7 +25,7 @@ FUTURE_OPS = {"X", "F", "U", "G", "W", "R"}
 PAST_OPS = {"Y", "O", "S", "H"}
 
 
-def launch(cmd, debug=False):
+def launch(cmd):
     """Launch a command."""
     process = Popen(
         args=cmd,
