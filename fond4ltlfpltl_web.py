@@ -29,12 +29,10 @@ PAST_OPS = {"Y", "O", "S", "H"}
 def launch(cmd):
     """Launch a command."""
     process = Popen(
-        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
         preexec_fn=os.setsid,
-        shell=True,
         encoding="utf-8",
     )
     try:
@@ -47,9 +45,12 @@ def launch(cmd):
 
 def _call_wrapper(planner, d, p, s="0"):
     """Call the planner wrapper."""
-    cmd = f"python {PLANNER_DIR}/{Path(planner)}/{planner}_wrapper.py -d {d} -p {p}"
+    # cmd = f" {PLANNER_DIR}/{Path(planner)}/{planner}_wrapper.py -d {d} -p {p}"
+    # cmd = ["python", f"{PLANNER_DIR}/{Path(planner)}/{planner}_wrapper.py", "-d", f"{d}", "-p", f"{p}"]
+    # print(d, p)
+    cmd = [sys.executable, f"{PACKAGE_DIR}/{planner}_wrapper.py", "-d", f"{d}", "-p", f"{p}"]
     if planner != "prp":
-        cmd = cmd + f" -s {s}"
+        cmd.extend(["-s", f"{s}"])
     return launch(cmd)
 
 
@@ -89,7 +90,7 @@ def _compilation(d, p, f):
 
 @app.route('/')
 def index():
-    launch(f"rm {OUTPUT_DIR}/* {OUTPUT_DIR}/plan/* {PACKAGE_DIR}/{DOWNLOAD}.zip")
+    launch(["rm", f"{OUTPUT_DIR}/*", f"{OUTPUT_DIR}/plan/*", f"{PACKAGE_DIR}/{DOWNLOAD}.zip"])
     return render_template("index.html")
 
 
@@ -171,7 +172,6 @@ def plan():
                 result["error"] = err
             else:
                 ok = True
-                # Path(f"{OUTPUT_DIR}/plan/policy-translated.out").rename(f"{OUTPUT_DIR}/plan/policy.txt")
         else:
             assert planner == "fondsat"
             out, err = _call_wrapper(planner, dom_path, prob_path, policy_type)

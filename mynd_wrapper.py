@@ -2,26 +2,24 @@ import os
 import argparse
 import re
 import signal
-import inspect
 import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
 
-MYND_DIR = os.path.dirname(inspect.getfile(inspect.currentframe()))  # type: ignore
-PLANNERS_DIR = str(Path(MYND_DIR, "..").resolve())  # type: ignore
-OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type: ignore
+PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLANNERS_DIR = str(Path(PACKAGE_DIR, "planners").resolve())  # type: ignore
+MYND_DIR = str(Path(PLANNERS_DIR, "mynd").resolve())  # type: ignore
+OUTPUT_DIR = str(Path(PACKAGE_DIR, "static/output/plan").resolve())  # type: ignore
 
 
 def launch(cmd):
     """Launch a command."""
     process = Popen(
-        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
         preexec_fn=os.setsid,
-        shell=True,
         encoding="utf-8",
     )
     try:
@@ -34,17 +32,18 @@ def launch(cmd):
 
 def plan(domain_path, problem_path, strong):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
-    rm_cmd = "rm {0}/*.dot {0}/*.txt".format(OUTPUT_DIR)
+    rm_cmd = ["rm", f"{OUTPUT_DIR}/*.dot", f"{OUTPUT_DIR}/*.txt"]
     launch(rm_cmd)
     search = "LAOSTAR"
     if strong:
         search = "AOSTAR"
-    translate_command = f"python {MYND_DIR}/translator-fond/translate.py {domain_path} {problem_path}"
+    translate_command = [sys.executable, f"{MYND_DIR}/translator-fond/translate.py", f"{domain_path}",
+                         f"{problem_path}"]
     launch(translate_command)
-    planner_command = f"java -jar {MYND_DIR}/MyND.jar -search {search} output.sas -exportPlan " \
-                      f"{OUTPUT_DIR}/policy.txt -exportDot {OUTPUT_DIR}/policy.dot -timeout 300"
+    planner_command = ["java", "-jar", f"{MYND_DIR}/MyND.jar", "-search", f"{search}", "output.sas", "-exportPlan",
+                       f"{OUTPUT_DIR}/policy.txt", "-exportDot", f"{OUTPUT_DIR}/policy.dot", "-timeout", "300"]
     out, err = launch(planner_command)
-    rm_cmd = "rm output.sas"
+    rm_cmd = ["rm", "output.sas"]
     launch(rm_cmd)
     result = re.search(
         r"Result: No .*",

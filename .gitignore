@@ -18,6 +18,7 @@
 static/output/*
 # exception to the rule
 !static/output/.gitkeep
+!static/output/plan/.gitkeep
 
 # Sensitive or high-churn files
 .idea/**/dataSources/

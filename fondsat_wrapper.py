@@ -2,26 +2,24 @@ import os
 import re
 import argparse
 import signal
-import inspect
 import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
 
-FONDSAT_DIR = os.path.dirname(inspect.getfile(inspect.currentframe()))  # type: ignore
-PLANNERS_DIR = str(Path(FONDSAT_DIR, "..").resolve())  # type: ignore
-OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type: ignore
+PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLANNERS_DIR = str(Path(PACKAGE_DIR, "planners").resolve())  # type: ignore
+FONDSAT_DIR = str(Path(PLANNERS_DIR, "fondsat").resolve())  # type: ignore
+OUTPUT_DIR = str(Path(PACKAGE_DIR, "static/output/plan").resolve())  # type: ignore
 
 
 def launch(cmd):
     """Launch a command."""
     process = Popen(
-        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
         preexec_fn=os.setsid,
-        shell=True,
         encoding="utf-8",
     )
     try:
@@ -34,11 +32,11 @@ def launch(cmd):
 
 def plan(domain_path, problem_path, strong):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
-    rm_cmd = "rm {0}/*.dot {0}/*.txt".format(OUTPUT_DIR)
+    rm_cmd = ["rm", f"{OUTPUT_DIR}/*.dot", f"{OUTPUT_DIR}/*.txt"]
     launch(rm_cmd)
 
-    planner_command = f"python {FONDSAT_DIR}/main.py {domain_path} {problem_path} -strong {strong} -policy 1 " \
-                      f"-time_limit 300"
+    planner_command = [sys.executable, f"{FONDSAT_DIR}/main.py", f"{domain_path}", f"{problem_path}", "-strong",
+                       f"{strong}", "-policy", "1", f"-time_limit", "300"]
     out, err = launch(planner_command)
     result = re.search(
         r"-> OUT OF TIME|-> OUT OF TIME/MEM",
@@ -51,10 +49,11 @@ def plan(domain_path, problem_path, strong):
     else:
         with open(f"{OUTPUT_DIR}/policy.txt", "w+") as f:
             f.write(re.search(r"##SOLVED##(.*)", out, re.DOTALL).group(1).strip())
-        draw_command = f"python {FONDSAT_DIR}/draw.py -i {OUTPUT_DIR}/policy.txt -o {OUTPUT_DIR}/policy.dot"
+        draw_command = [sys.executable, f"{FONDSAT_DIR}/draw.py", "-i", f"{OUTPUT_DIR}/policy.txt", "-o",
+                        f"{OUTPUT_DIR}/policy.dot"]
         launch(draw_command)
 
-    rm_cmd = "rm *.sas *-temp.txt*"
+    rm_cmd = ["rm", "*.sas", "*-temp.txt*"]
     launch(rm_cmd)
 
 

@@ -6,12 +6,11 @@
 import os, importlib
 import argparse
 import tempfile
-import fondparser
-from normalizer import flatten
-from fondparser.fond_parser import Parser
-from fondparser.fond_task import FONDTask
-from fondparser import grounder
-from fondparser.formula import *
+from .normalizer import flatten
+from .fondparser.fond_parser import Parser
+from .fondparser.fond_task import FONDTask
+from .fondparser import grounder
+from .fondparser.formula import *
 
 import networkx as nx
 from networkx.drawing.nx_pydot import write_dot
@@ -40,10 +39,10 @@ class VALAction:
         self.mapping = mapping
 
     def __str__(self):
-        return "%s: +Pre = %s / -Pre = %s / Effs = %s" % (self.name, \
-                        str([self.mapping[fl] for fl in self.ppres]), \
-                        str([self.mapping[fl] for fl in self.npres]), \
-                        str(["(%s --> %s)" % (','.join([self.mapping[fl] for fl in c]), ','.join([self.mapping[fl] for fl in e])) for (c,e) in self.effs]))
+        return "%s: +Pre = %s / -Pre = %s / Effs = %s" % (self.name,
+                                                          str([self.mapping[fl] for fl in self.ppres]),
+                                                          str([self.mapping[fl] for fl in self.npres]),
+                                                          str(["(%s --> %s)" % (','.join([self.mapping[fl] for fl in c]), ','.join([self.mapping[fl] for fl in e])) for (c,e) in self.effs]))
 
 """ Global variables. """
 problem = None
@@ -59,7 +58,7 @@ states_to_actions = dict()
 def validate_and_generate_graph(dfile, pfile, fluents_map, sol, val):
     """ Validate the policy and generate graph structure. """
 
-    module_validator = importlib.import_module("validators.%s" % val)
+    module_validator = importlib.import_module("planners.prp.validators.%s" % val)
     problem = grounder.GroundProblem(dfile, pfile)
 
     global fluents

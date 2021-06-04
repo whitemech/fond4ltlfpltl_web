@@ -1,6 +1,6 @@
 
-from fondparser.action import Action
-from fondparser.formula import *
+from .fondparser.action import Action
+from .fondparser.formula import *
 
 from itertools import product, chain
 

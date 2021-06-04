@@ -2,29 +2,27 @@ import os
 import re
 import argparse
 import signal
-import inspect
-import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
 
-import translator.translate_policy as translator
-import validator
+from planners.prp.translator import translate_policy as translator
+from planners.prp import validator
 
-PRP_DIR = os.path.dirname(inspect.getfile(inspect.currentframe()))  # type: ignore
-PLANNERS_DIR = str(Path(PRP_DIR, "..").resolve())  # type: ignore
-OUTPUT_DIR = str(Path(PLANNERS_DIR, "../static/output/plan").resolve())  # type: ignore
+
+PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLANNERS_DIR = str(Path(PACKAGE_DIR, "planners").resolve())  # type: ignore
+PRP_DIR = str(Path(PLANNERS_DIR, "prp").resolve())  # type: ignore
+OUTPUT_DIR = str(Path(PACKAGE_DIR, "static/output/plan").resolve())  # type: ignore
 
 
 def launch(cmd):
     """Launch a command."""
     process = Popen(
-        executable=sys.executable,
         args=cmd,
         stdout=PIPE,
         stderr=PIPE,
         preexec_fn=os.setsid,
-        shell=True,
         encoding="utf-8",
     )
     try:
@@ -37,9 +35,9 @@ def launch(cmd):
 
 def plan(domain_path, problem_path):
     """Planning for temporally extended goals (LTLf or PLTLf)."""
-    rm_cmd = "rm {0}/*.dot {0}/*.out".format(OUTPUT_DIR)
+    rm_cmd = ["rm", f"{OUTPUT_DIR}/*.dot", f"{OUTPUT_DIR}/*.out"]
     launch(rm_cmd)
-    planner_command = f"{PRP_DIR}/prp {domain_path} {problem_path} --dump-policy 2"
+    planner_command = [f"{PRP_DIR}/prp", f"{domain_path}", f"{problem_path}", "--dump-policy", "2"]
     out, err = launch(planner_command)
     result = re.search(
         r"No solution .*",
@@ -52,14 +50,14 @@ def plan(domain_path, problem_path):
     else:
         # Translate the policy from SAS+ to instantiated standard facts
         mapping, _, policy = translator.translate('output', 'policy.out', f'{OUTPUT_DIR}/policy.txt')
-        # print(mapping)
         # Validate the policy (from the initial state to the goal state) and generate the data structure
         g = validator.validate_and_generate_graph(domain_path,
                                                   problem_path,
                                                   mapping, policy, 'prp')
         validator.generate_dot_graph(g, OUTPUT_DIR)
 
-    rm_cmd = "rm graph.dot *.out *.fsap plan_numbers_and_cost sas_plan elapsed.time output *.sas"
+    rm_cmd = ["rm", "graph.dot", "policy.out", "policy.fsap", "plan_numbers_and_cost", "sas_plan", "elapsed.time", "output",
+              "output.sas"]
     launch(rm_cmd)
 
 
