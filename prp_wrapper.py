@@ -2,6 +2,7 @@ import os
 import re
 import argparse
 import signal
+import sys
 
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired

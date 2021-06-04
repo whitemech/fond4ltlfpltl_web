@@ -12,7 +12,7 @@ def _translate_grendel_fluent(f):
 def load(pol, fmap):
     global POLICY
 
-    print "\nLoading GRENDEL policy..."
+    print("\nLoading GRENDEL policy...")
 
     with open(pol, 'r') as f:
         file_lines = filter(lambda x: x != '', [line.rstrip("\n") for line in f.readlines()])
