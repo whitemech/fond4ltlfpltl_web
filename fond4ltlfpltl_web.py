@@ -133,7 +133,7 @@ def cachecontrol(max_age=1):
         def wrapped_f(*args, **kwargs):
             response = f(*args, **kwargs)
             if (type(response) is Flask.response_class) and (
-                response.status_code == 200
+                    response.status_code == 200
             ):
                 response.cache_control.max_age = max_age
             return response
@@ -237,7 +237,7 @@ def plan():
                   "error": "Policy not found.",
                   "policy_txt": "",
                   "policy_dot": "",
-                  "elapsed_time": "-1",}
+                  "elapsed_time": "-1", }
 
         ok = False
         app.logger.info(f"Calling {planner}...")
@@ -298,4 +298,7 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(
+        debug=True,
+        host=configuration.FLASK_RUN_HOST,
+        port=configuration.FLASK_RUN_PORT,)
