@@ -86,7 +86,7 @@ $(document).ready(function () {
                 editor_d2.setValue("");
                 editor_p2.setValue("");
                 $.ajax({
-                    url: "/compile",
+                    url: "/api/compile",
                     type: "POST",
                     data: {
                         form_goal: $('#form_goal').val(),
@@ -159,7 +159,7 @@ $(document).ready(function () {
                         '                            </svg>';
                 } else {
                     $.ajax({
-                        url: "/plan",
+                        url: "/api/plan",
                         type: "POST",
                         data: {
                             form_goal: $('#form_goal').val(),
