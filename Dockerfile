@@ -70,5 +70,7 @@ WORKDIR /fond4ltlfpltl_web
 COPY . .
 
 RUN pip install -r requirements.txt
+RUN pip install gunicorn
+CMD gunicorn --bind 0.0.0.0:$PORT fond4ltlfpltl_web:app
 
-CMD ["python", "fond4ltlfpltl_web.py"]
+#CMD ["python", "fond4ltlfpltl_web.py"]
