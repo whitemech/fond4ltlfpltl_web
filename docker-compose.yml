@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  fond_api:
+    image: "fond"
+    build: 
+      context: .
+    ports:
+      - "5000:5000"
+    healthcheck:
+      interval: 10s
+      retries: 5
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/"]
+      timeout: 5s
+    restart: on-failure
+    entrypoint: 
+        - python
+        - fond4ltlfpltl_web.py
+        - --port 5000
