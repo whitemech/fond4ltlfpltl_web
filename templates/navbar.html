@@ -49,7 +49,179 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                APIs
+                <p class="text-justify">
+                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> exposes its main functionalities via
+                    RESTful
+                    APIs. Here, you can find their documentation.
+                </p>
+
+                <!--                <h5>Base URL</h5>-->
+                <!--                <p class="text-justify">-->
+                <!--                    The base URL is <a href="http://fond4ltlfpltl.diag.uniroma1.it/api/">http://fond4ltlfpltl.diag.uniroma1.it/api/</a>-->
+                <!--                </p>-->
+
+                <h5>APIs Description</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <b>Healthcheck, URL: <code>/api</code></b>
+                        <br>
+                        <b>Method:</b> GET <br>
+                        <b>Description:</b> Returns the health of the API service.<br>
+                        <p>
+                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Response
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample1">
+                            <div class="card card-body">
+                                <pre>{}</pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Versions, URL: <code>/api/versions</code></b>
+                        <br>
+                        <b>Method:</b> GET <br>
+                        <b>Description:</b> Returns the versions of tools used.<br>
+                        <p>
+                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample0" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Response
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample0">
+                            <div class="card card-body">
+                                <pre>
+[
+   [
+      "Mona",
+      "1.4-18",
+      "https://www.brics.dk/mona/"
+   ],
+   [
+      "Graphviz",
+      "2.43.0",
+      "https://graphviz.org/"
+   ],
+   [
+      "Python",
+      "3.7.5",
+      "https://www.python.org/"
+   ],
+   [
+      "Flask",
+      "2.0.1",
+      "https://flask.palletsprojects.com/en/2.0.x/"
+   ],
+   [
+      "FOND4LTLfPLTLf",
+      "0.0.2",
+      "https://github.com/whitemech/fond4ltlfpltlf"
+   ],
+   [
+      "LTLf2DFA",
+      "1.0.1",
+      "https://github.com/whitemech/ltlf2dfa"
+   ]
+]</pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Compile, URL: <code>/api/compile</code></b>
+                        <br>
+                        <b>Method:</b> POST <br>
+                        <b>Description:</b> Given a PDDL domain and problem and an LTL<sub>f</sub>/PLTL<sub>f</sub> goal
+                        formula, returns the compiled domain and problem and the DFA.<br>
+                        <p>
+                            <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample2-0" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Request
+                            </button>
+                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Response
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample2-0">
+                            <div class="card card-body">
+                                <pre>{
+   "form_goal": "...",
+   "form_pddl_domain_in": "(define (domain ...",
+   "form_pddl_problem_in": "(define (problem  ...",
+}</pre>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseExample2">
+                            <div class="card card-body">
+                                <pre>{
+   "dfa": "digraph ...",
+   "elapsed_time": "0.184 ...",
+   "form_pddl_domain_out": "(define (domain ...",
+   "form_pddl_problem_out": "(define (problem ...",
+   "formula": "..."
+}</pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Compile and Plan, URL: <code>/api/plan</code></b>
+                        <br>
+                        <b>Method:</b> POST <br>
+                        <b>Description:</b> Given a PDDL domain and problem and an LTL<sub>f</sub>/PLTL<sub>f</sub> goal
+                        formula, returns the compiled domain, compiled problem, the DFA and the policy if exists.<br>
+                        <p>
+                            <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample3-0" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Request
+                            </button>
+                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample3" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                Response
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample3-0">
+                            <div class="card card-body">
+                                <pre>{
+   "form_goal": "...",
+   "form_pddl_domain_in": "(define (domain ...",
+   "form_pddl_problem_in": "(define (problem  ...",
+   "planner": "{fondsat, mynd, prp}",
+   "policy_type": "{0, 1}"
+}</pre>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseExample3">
+                            <div class="card card-body">
+                                <pre>{
+   "dfa":"digraph ...",
+   "elapsed_time":"3.228 ...",
+   "error":"",
+   "form_pddl_domain_out":"(define (domain ...",
+   "form_pddl_problem_out":"(define (problem ...",
+   "formula":"...",
+   "policy_dot":"digraph ...",
+   "policy_found":true,
+   "policy_txt":"..."
+}</pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Download, URL: <code>/api/download</code></b>
+                        <br>
+                        <b>Method:</b> GET <br>
+                        <b>Description:</b> Download the produced files.<br>
+                    </li>
+                </ul>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -73,8 +245,7 @@
                     <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> is a tool that compiles Fully Observable
                     Non-Deterministic domain models with temporally extended goals, specified either in LTL<sub>f</sub>
                     or in PLTL<sub>f</sub>, into standard FOND planning problems and computes the policy, if it exists,
-                    with
-                    publicly available off-the-shelf FOND planners.
+                    with publicly available off-the-shelf FOND planners.
                 </p>
 
                 <h5>Citing</h5>
@@ -110,10 +281,15 @@
 
                 <h5>Credits</h5>
                 <p class="text-justify">
-                    This website is made with Flask and Bootstrap 5. We used the <a target="_blank"
-                                                                                    href="https://ace.c9.io/">Ace</a>
-                    project for the PDDL editor and <a target="_blank" href="http://editor.planning.domains/">editor.planning.domains</a>
-                    for the PDDL syntax and snippets. The project also depends on LTL<sub>f</sub>2DFA,
+                    This website is made with <a target="_blank" href="https://flask.palletsprojects.com">Flask</a>, <a
+                        target="_blank" href="https://getbootstrap.com/">Bootstrap 5</a> and <a target="_blank"
+                                                                                                href="https://github.com/magjac/d3-graphviz">D3
+                    Graphviz</a>. We used the <a target="_blank" href="https://ace.c9.io/">Ace</a> project for the PDDL
+                    editor and <a target="_blank" href="http://editor.planning.domains/">editor.planning.domains</a> for
+                    the PDDL syntax and snippets. The project also depends on <a target="_blank"
+                                                                                 href="http://ltlf2dfa.diag.uniroma1.it/">LTL<sub>f</sub>2DFA</a>,
+                    <a target="_blank" href="https://www.brics.dk/mona/">MONA</a> and <a target="_blank"
+                                                                                         href="https://graphviz.org/">Graphviz</a>.
                 </p>
 
                 <h5>References</h5>
