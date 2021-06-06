@@ -15,9 +15,9 @@
                 <div class="col-sm-4 mt-2">
                     <select class="form-select form-select-md" aria-label=".form-select-md example" id="example_select">
                         <option selected>Select example</option>
-                        <option value="static/examples/triangle-tire.json">triangle-tire</option>
                         <option value="static/examples/acrobatics.json">acrobatics</option>
                         <option value="static/examples/beam-walk.json">beam-walk</option>
+                        <option value="static/examples/triangle-tire.json">triangle-tire</option>
                         <!--                    <option>4</option>-->
                         <!--                    <option>5</option>-->
                     </select>
@@ -81,7 +81,8 @@
         </div>
     </div>
 
-    <div class="toast position-fixed bottom-0 end-0 p-3" id="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast position-fixed bottom-0 end-0 p-3" id="toast" role="alert" aria-live="assertive"
+         aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto">FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></strong>
             <small>now</small>
@@ -115,36 +116,8 @@
 <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
 <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
 
-<!--<script src="{{ url_for('static', filename='js/src-min-noconflict/ace.js') }}" type="text/javascript"-->
-<!--        charset="utf-8"></script>-->
-
-<!--<script src="{{ url_for('static', filename='js/web-planner.js') }}" type="text/javascript"-->
-<!--        charset="utf-8"></script>-->
-
 <script src="{{ url_for('static', filename='js/require.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"
         charset="utf-8"></script>
-
-<!--<script type="text/javascript">-->
-<!--    $(document).ready(function () {-->
-<!--        // Bootstrap popovers-->
-<!--        $('#formula-popover').popover({-->
-<!--            // trigger: " click",-->
-<!--            html: true,-->
-<!--            sanitize: false,-->
-<!--            title: "How to write formulas?",-->
-<!--            content: "Look at the LTL<sub>f</sub>2DFA tool <b>syntax</b>/<b>semantics</b> <a href='http://ltlf2dfa.diag.uniroma1.it/#syntax' target='_blank'>here</a>. <br>" +-->
-<!--                "Symbols correspond to grounded predicates in PDDL and objects are separated by an \"_\". <br>" +-->
-<!--                "<b> predicateName_obj1_obj2_..._objN</b>" +-->
-<!--                "<br> E.g. " +-->
-<!--                "<ul><li>vehicleat(l23) becomes vehicleat_l23</li><li>on(a1, a2) becomes on_a1_a2</li></ul>"-->
-<!--        });-->
-<!--        $('#problem-popover').popover({-->
-<!--            // trigger: " click",-->
-<!--            html: true,-->
-<!--            sanitize: false,-->
-<!--            title: "Note",-->
-<!--            content: "The <b>:goal</b> in the PDDL problem is completely ignored in the compilation process."-->
-<!--        });-->
 
 </html>

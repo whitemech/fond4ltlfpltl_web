@@ -293,7 +293,8 @@ def download():
 
 @app.route('/')
 def index():
-    launch(["rm", f"{OUTPUT_DIR}/*", f"{OUTPUT_DIR}/plan/*", f"{PACKAGE_DIR}/{DOWNLOAD}.zip"])
+    launch(["find", f"{OUTPUT_DIR}/", "!", "-type", "d", "-exec", "rm", "'{}'", "\;"])
+    launch(["rm", f"{PACKAGE_DIR}/{DOWNLOAD}.zip"])
     return render_template("index.html")
 
 
@@ -301,4 +302,5 @@ if __name__ == "__main__":
     app.run(
         debug=True,
         host=configuration.FLASK_RUN_HOST,
-        port=configuration.FLASK_RUN_PORT,)
+        port=configuration.FLASK_RUN_PORT,
+    )
