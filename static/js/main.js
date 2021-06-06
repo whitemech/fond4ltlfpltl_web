@@ -58,6 +58,8 @@ $(document).ready(function () {
             $("#policy_text").html("");
             $("#form_goal_c").val("");
             $("#form_goal_p").val("");
+            d3.select("#compile_graph").select("svg").session_destroy;
+            d3.select("#policy_graph").select("svg").session_destroy;
             $.ajax({
                 url: "/load",
                 type: "GET",
@@ -85,6 +87,8 @@ $(document).ready(function () {
                 );
                 editor_d2.setValue("");
                 editor_p2.setValue("");
+                d3.select("#compile_graph").select("svg").session_destroy;
+                d3.select("#policy_graph").select("svg").session_destroy;
                 $.ajax({
                     url: "/api/compile",
                     type: "POST",
@@ -144,6 +148,8 @@ $(document).ready(function () {
                 editor_d2.setValue("");
                 editor_p2.setValue("");
                 var policy_type = 0;
+                d3.select("#compile_graph").select("svg").session_destroy;
+                d3.select("#policy_graph").select("svg").session_destroy;
                 if ($("#btnstrong").is(":checked")) {
                     policy_type = 1;
                 }

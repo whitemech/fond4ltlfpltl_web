@@ -6,7 +6,6 @@ graphviz==0.16
 itsdangerous==2.0.1
 Jinja2==3.0.1
 lark-parser==0.11.3
-ltlf2dfa @ git+https://github.com/whitemech/LTLf2DFA.git@fe90ffbccb0c8cb62a4f07a355f7ff019af85f37
 MarkupSafe==2.0.1
 mpmath==1.2.1
 networkx==2.5.1

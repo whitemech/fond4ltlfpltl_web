@@ -30,7 +30,52 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Usage
+                <p class="text-justify">
+                    The <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> web service is developed to allow
+                    interactions through both this graphical user interface and RESTful APIs.
+                </p>
+
+                <h5>Input</h5>
+                <p class="text-justify">
+                    The application requires the user to provide the PDDL domain, the PDDL problem and
+                    an LTL<sub>f</sub>/PLTL<sub>f</sub> goal. The user can either directly write them with the given
+                    editors or can use a preloaded working example from renown domain models.
+                </p>
+                <p class="text-justify">
+                    Formulas can be specified with the LTL<sub>f</sub>2DFA tool syntax/semantics
+                    <a href='http://ltlf2dfa.diag.uniroma1.it/#syntax' target='_blank'>here</a>.
+                    Formula symbols correspond to grounded predicates in PDDL and objects are separated by an <i>underscore</i>,
+                    i.e., <code>predicateName_obj1_obj2_..._objN</code>. For instance, <code>vehicleat(l23)</code> becomes
+                    <code>vehicleat_l23</code> and <code>on(a1, a2)</code> becomes <code>on_a1_a2</code>. Also, note
+                    that the PDDL goal specified in the PDDL problem will be completely ignored.
+                </p>
+                <h5>Output</h5>
+                <p class="text-justify">
+                    The web service allows two main options: <i>Compile</i> and <i>Compile + Plan</i>.
+                    The former compiles FOND domain models with LTL<sub>f</sub>/PLTL<sub>f</sub> goals into standard
+                    FOND planning problems.
+                    The latter, instead, first performs the compilation just described and then calls an off-the-shelf
+                    FOND Planner to find a policy for the planning problem.
+                </p>
+                <p class="text-justify">
+                    In case the user executes <i>Compile + Plan</i>, the user can choose among three different
+                    state-of-the-art planners, i.e., <i>FOND-SAT, MyND</i> and <i>PRP</i>. Additionally, based on the chosen planner,
+                    the user can also decide to ask for <i>strong-cyclic</i> or <i>strong</i> policies.
+                    <br>
+                    <i>FOND-SAT</i> and <i>Strong-cyclic</i> are set as default.
+                </p>
+
+                <p class="text-justify">
+                    The output of the <i>Compile</i> execution is under the <i>Output Compilation</i> tab. There, you
+                    can find two editors containing the compiled PDDL domain and problems plus the Graphviz
+                    representation of the DFA for the temporal formula.
+                </p>
+                <p class="text-justify">
+                    Finally, the output of the <i>Compile + Plan</i> execution is under the <i>Output Policy</i> tab.
+                    There, you can find both a textual and a graphical representation of the policy output from the
+                    planner.
+                    The user can also download everything using the related button.
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
