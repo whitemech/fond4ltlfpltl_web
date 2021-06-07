@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/"><b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b></a>
+        <a class="navbar-brand" href="/"><b>FOND Planning for LTL<sub>f</sub>/PLTL<sub>f</sub></b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,7 +31,7 @@
             </div>
             <div class="modal-body">
                 <p class="text-justify">
-                    The <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> web service is developed to allow
+                    The <b>FOND Planning for LTL<sub>f</sub></b> web service is developed to allow
                     interactions through both this graphical user interface and RESTful APIs.
                 </p>
 
@@ -51,14 +51,14 @@
                 </p>
                 <h5>Output</h5>
                 <p class="text-justify">
-                    The web service allows two main options: <i>Compile</i> and <i>Compile + Plan</i>.
+                    The web service allows two main options: <b>Compile</b> and <b>Compile + Plan</b>.
                     The former compiles FOND domain models with LTL<sub>f</sub>/PLTL<sub>f</sub> goals into standard
                     FOND planning problems.
                     The latter, instead, first performs the compilation just described and then calls an off-the-shelf
                     FOND Planner to find a policy for the planning problem.
                 </p>
                 <p class="text-justify">
-                    In case the user executes <i>Compile + Plan</i>, the user can choose among three different
+                    In case the user executes <b>Compile + Plan</b>, the user can choose among three different
                     state-of-the-art planners, i.e., <i>FOND-SAT, MyND</i> and <i>PRP</i>. Additionally, based on the chosen planner,
                     the user can also decide to ask for <i>strong-cyclic</i> or <i>strong</i> policies.
                     <br>
@@ -66,12 +66,12 @@
                 </p>
 
                 <p class="text-justify">
-                    The output of the <i>Compile</i> execution is under the <i>Output Compilation</i> tab. There, you
+                    The output of the <b>Compile</b> execution is under the <i>Output Compilation</i> tab. There, you
                     can find two editors containing the compiled PDDL domain and problems plus the Graphviz
                     representation of the DFA for the temporal formula.
                 </p>
                 <p class="text-justify">
-                    Finally, the output of the <i>Compile + Plan</i> execution is under the <i>Output Policy</i> tab.
+                    Finally, the output of the <b>Compile + Plan</b> execution is under the <i>Output Policy</i> tab.
                     There, you can find both a textual and a graphical representation of the policy output from the
                     planner.
                     The user can also download everything using the related button.
@@ -95,7 +95,7 @@
             </div>
             <div class="modal-body">
                 <p class="text-justify">
-                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> exposes its main functionalities via
+                    <b>FOND Planning for LTL<sub>f</sub></b> exposes its main functionalities via
                     RESTful
                     APIs. Here, you can find their documentation.
                 </p>
@@ -162,9 +162,9 @@
       "https://flask.palletsprojects.com/en/2.0.x/"
    ],
    [
-      "FOND4LTLfPLTLf",
+      "FOND4LTLf",
       "0.0.2",
-      "https://github.com/whitemech/fond4ltlfpltlf"
+      "https://github.com/whitemech/fond4ltlf"
    ],
    [
       "LTLf2DFA",
@@ -301,7 +301,7 @@
                 </p>
                 <h5>License</h5>
                 <p class="text-justify">
-                    <b>FOND Planning for LTL<sub>f</sub> - PLTL<sub>f</sub></b> is licensed under the GNU Lesser General
+                    <b>FOND Planning for LTL<sub>f</sub></b> is licensed under the GNU Lesser General
                     Public License v3 or later License
                     (<a target="_blank" href="https://www.gnu.org/licenses/lgpl-3.0.html">LGPLv3+</a>).
                 </p>

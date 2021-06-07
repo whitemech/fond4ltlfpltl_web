@@ -19,7 +19,7 @@ $(document).ready(function () {
             editor.setTheme("ace/theme/textmate");
             editor.getSession().setMode("ace/mode/pddl");
             editor.setOptions({
-                fontSize: "14pt",
+                fontSize: "12pt",
                 enableBasicAutocompletion: true,
                 enableSnippets: true,
                 enableLiveAutocompletion: true,

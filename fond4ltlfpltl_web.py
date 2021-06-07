@@ -301,6 +301,4 @@ def index():
 if __name__ == "__main__":
     app.run(
         debug=False,
-        host=configuration.FLASK_RUN_HOST,
-        port=configuration.FLASK_RUN_PORT,
     )
