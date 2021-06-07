@@ -1,7 +1,7 @@
 click==7.1.2
 decorator==4.4.2
 Flask==2.0.1
-fond4ltlfpltlf @ git+https://github.com/whitemech/fond4ltlfpltlf.git@ae27a8b9e4511c8c9c49934957778fd9ae7bf660
+fond4ltlfpltlf @ git+https://github.com/whitemech/fond4ltlfpltlf.git@develop
 graphviz==0.16
 itsdangerous==2.0.1
 Jinja2==3.0.1
