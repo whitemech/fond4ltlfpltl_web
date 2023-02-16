@@ -13,4 +13,4 @@ ply==3.11
 pydot==1.4.2
 pyparsing==2.4.7
 sympy==1.8
-Werkzeug==2.0.1
+Werkzeug==2.2.3
