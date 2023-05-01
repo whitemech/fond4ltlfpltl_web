@@ -1,6 +1,6 @@
 click==7.1.2
 decorator==4.4.2
-Flask==2.0.1
+Flask==2.3.2
 fond4ltlfpltlf @ git+https://github.com/whitemech/fond4ltlfpltlf.git@develop
 graphviz==0.16
 itsdangerous==2.0.1
